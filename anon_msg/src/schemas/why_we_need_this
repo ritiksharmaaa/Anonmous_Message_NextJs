@@ -1,0 +1,16 @@
+why we need this when we alredy have a schema in  monggose schmea , 
+ the reason why we have this just because those are a schema for whole thing , like user have lot of thing like name username eemil password 
+
+ so in sigup we jsut need name email password veriy , 
+
+ but when we in signin page we only need usename and password 
+
+ so do you have any way  to valid the only username and the password 
+
+ no 
+
+
+ that why we are using the zod  schema that why this is made for 
+
+
+ 

@@ -1,0 +1,1 @@
+1 ; after project setup you have to create models 
