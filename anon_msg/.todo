@@ -1,0 +1,3 @@
+- [x] Inspect existing schemas and models for messages
+- [x] Implement GET route logic with aggregation pipeline
+- [x] Ensure responses follow ApiResponse pattern and add explanatory comments

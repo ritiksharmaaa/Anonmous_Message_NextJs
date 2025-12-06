@@ -1,4 +1,4 @@
-import mongoose, { Document, Mongoose, Schema } from 'mongoose';
+import mongoose, { Document,  Schema } from 'mongoose';
 
 
 // createing the custom inteface just we havein c++ 
@@ -52,9 +52,13 @@ const UserSchema: Schema<User> = new Schema({
 
 });
 
+// here why we are not create a model for message , look at the user schema we are embedding the message schema inside the user schema . it mean we want to  store the messages inside the user document only .
+
 export const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>('User', UserSchema);
 
-export default UserModel;
+
+export default UserModel ;
+
 
 
 
