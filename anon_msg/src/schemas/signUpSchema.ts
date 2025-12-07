@@ -6,11 +6,14 @@ const usernameValidation = z.string()
   .max(30, {message: 'Username must be at most 30 characters long'})
   .regex(/^[a-zA-Z0-9_]+$/, {message: 'Username can only contain letters, numbers, and underscores'});
 
+  const emailValidation = z.string()
+    .email({ message: 'Invalid email address' });
 
   const signUpSchema = z.object({
-  username: usernameValidation,
-  password: z.string()
-    .min(8, {message: 'Password must be at least 8 characters long'}) 
+    username: usernameValidation,
+    email: emailValidation,
+    password: z.string()
+      .min(8, { message: 'Password must be at least 8 characters long' })
   });
 
 export {signUpSchema, usernameValidation};
