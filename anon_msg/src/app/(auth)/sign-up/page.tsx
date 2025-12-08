@@ -54,6 +54,7 @@ export default function Component() {
         const data = res.data
         if (!isCancelled) {
           if (data.success == true) {
+            // there is need some attention we see it can create problem in furture
             setUserMessage(data.message)
           } else {
             setUserMessage("Username is taken")
@@ -127,6 +128,7 @@ export default function Component() {
                     }}
                   />
                   {isCheckingUsername && <Loader2 className="absolute right-3 top-3 h-4 w-4 animate-spin" />}
+                  <p className={`text-sm text-left ${userMessage === "Username is unique" ? "text-green-500" : "text-red-500"}`}>{userMessage}</p>
                 </>
                 
               </FormControl>

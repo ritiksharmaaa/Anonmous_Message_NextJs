@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";// not require if you move this to (app) we do access in the other way 
-import AuthProvider from "@/context/authProvider";
-import { Toaster } from "@/components/ui/sonner"
+// import "./globals.css"; not require if you move this to (app) we do access in the other way 
 import Navbar from "@/components/created/navbar";
+
+//  we can create two layout global is overighted by the internal layout so we 
 
 
 const geistSans = Geist({
@@ -28,14 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar />
         {children}
-                <Toaster />
 
       </body>
-        </AuthProvider>
     </html>
   );
 }
