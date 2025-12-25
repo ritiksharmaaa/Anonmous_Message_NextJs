@@ -66,7 +66,7 @@ export default function Home() {
 
           {/* Device Mockup (WhatsApp Landing Style) */}
           <div className="hidden lg:flex justify-center relative">
-            <div className="w-[300px] h-[600px] bg-black rounded-[3rem] border-[10px] border-zinc-900 shadow-2xl relative overflow-hidden ring-4 ring-red-600/5">
+            <div className="w-[300px] h-[600px] bg-black rounded-[3rem] border-10 border-zinc-900 shadow-2xl relative overflow-hidden ring-4 ring-red-600/5">
               <div className="p-6 pt-16 space-y-4">
                 <div className="bg-zinc-800 text-white p-3 rounded-2xl rounded-tl-none text-xs w-4/5">
                   "Is this actually anonymous?"
