@@ -1,0 +1,29 @@
+# Frontend routes
+/
+/sign-in
+/sign-up
+/dashboard
+/u/:username
+/verify/:username
+
+# API endpoints (backend + client usages)
+/api/sign-up
+/api/unique-username-check
+/api/check-username
+/api/user-otp-verification
+/api/send-user-messages
+/api/suggest-messages
+/api/get-user-messages
+/api/is-accepting-messages
+/api/accept-messages
+/api/delete-message?messageId={id}
+
+# NextAuth /auth endpoints
+/api/auth/*
+/api/auth/session
+/api/auth/signin
+/api/auth/_log
+
+# Notes
+# - Some client code calls /api/check-username while backend file is /api/unique-username-check
+# - Client uses /api/accept-messages while backend file is /api/is-accepting-messages

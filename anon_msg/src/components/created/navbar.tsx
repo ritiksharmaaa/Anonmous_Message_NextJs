@@ -34,10 +34,10 @@ export default function Navbar() {
         {!session ? (
           <>
             <Link href="/sign-in">
-              <Button variant="outline">Sign In</Button>
+              <Button className="text-red-600 border-black "  variant="outline">Sign In</Button>
             </Link>
             <Link href="/sign-up">
-              <Button>Sign Up</Button>
+              <Button className="bg-red-600 border-black">Sign Up</Button>
             </Link>
           </>
         ) : (

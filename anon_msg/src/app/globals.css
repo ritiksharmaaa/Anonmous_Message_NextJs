@@ -1,6 +1,60 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* -------------------------this is for landing page  */
+/* This is the Tailwind v4 way to define your brand colors */
+@import "tailwindcss";
+
+@theme {
+  /* Major: White */
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  /* Minor: Red (The Action Color) */
+  --color-primary: #dc2626; 
+  --color-primary-foreground: #ffffff;
+
+  /* Minor: Black (The Contrast Color) */
+  --color-secondary: #111111;
+  --color-secondary-foreground: #ffffff;
+
+  /* Shadcn UI Variables */
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #fee2e2;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #dc2626;
+
+  --radius-xl: 1rem;
+  --radius-lg: 0.5rem;
+}
+
+/* Base styles to match your provided snippet */
+@layer base {
+  body {
+    @apply bg-white text-black font-sans;
+  }
+}
+
+/* Custom selection to match red theme */
+::selection {
+  background-color: #dc2626;
+  color: white;
+}
+/* Optional: WhatsApp-style Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Selection Color (Red highlight when dragging mouse) */
+::selection {
+  background-color: #dc2626;
+  color: white;
+}
+
+/* ----------------------------- */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
