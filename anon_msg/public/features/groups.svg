@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <!-- Balloon Strings -->
+  <path d="M200 250Q200 200 150 150" stroke="#d4d4d8" stroke-width="2"/>
+  <path d="M200 250Q200 200 200 130" stroke="#d4d4d8" stroke-width="2"/>
+  <path d="M200 250Q200 200 250 150" stroke="#d4d4d8" stroke-width="2"/>
+  
+  <!-- Knot -->
+  <circle cx="200" cy="250" r="4" fill="#71717a"/>
+  
+  <!-- Left Balloon -->
+  <ellipse cx="150" cy="150" rx="40" ry="50" fill="#fee2e2"/>
+  <path d="M130 130Q140 120 150 130" stroke="white" stroke-width="2" opacity="0.5"/>
+  
+  <!-- Right Balloon -->
+  <ellipse cx="250" cy="150" rx="40" ry="50" fill="#fca5a5"/>
+  <path d="M230 130Q240 120 250 130" stroke="white" stroke-width="2" opacity="0.5"/>
+  
+  <!-- Center Balloon (Front) -->
+  <ellipse cx="200" cy="130" rx="45" ry="55" fill="#dc2626"/>
+  <path d="M180 110Q190 100 200 110" stroke="white" stroke-width="3" opacity="0.3"/>
+  
+  <!-- Confetti -->
+  <rect x="100" y="100" width="8" height="8" fill="#dc2626" transform="rotate(15 100 100)"/>
+  <circle cx="300" cy="100" r="4" fill="#fca5a5"/>
+  <path d="M280 200L290 210" stroke="#dc2626" stroke-width="2"/>
+</svg>

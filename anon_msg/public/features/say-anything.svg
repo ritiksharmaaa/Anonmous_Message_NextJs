@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <!-- Soft Background Blob -->
+  <path d="M300 120C300 200 240 260 180 260C120 260 60 200 60 120C60 60 120 20 180 20C240 20 300 60 300 120Z" fill="#fee2e2" opacity="0.5"/>
+  
+  <!-- Paper Plane -->
+  <path d="M120 160L260 100L220 220L180 170L120 160Z" fill="white" stroke="#dc2626" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M180 170L260 100" stroke="#dc2626" stroke-width="3" stroke-linejoin="round"/>
+  
+  <!-- Looping Trail -->
+  <path d="M60 180C60 180 80 200 100 180C120 160 100 140 80 160C60 180 120 160 120 160" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 6" opacity="0.6"/>
+  
+  <!-- Floating Elements -->
+  <circle cx="280" cy="80" r="6" fill="#dc2626" opacity="0.8"/>
+  <rect x="250" y="200" width="10" height="10" transform="rotate(45 250 200)" fill="#fca5a5"/>
+</svg>

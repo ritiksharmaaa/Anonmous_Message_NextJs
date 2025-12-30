@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <!-- Background Square -->
+  <rect x="100" y="50" width="200" height="200" rx="30" fill="#fef2f2"/>
+  
+  <!-- Hat -->
+  <path d="M140 140H260L250 100C250 100 240 80 200 80C160 80 150 100 150 100L140 140Z" fill="#dc2626"/>
+  <rect x="130" y="140" width="140" height="10" rx="2" fill="#b91c1c"/>
+  
+  <!-- Glasses -->
+  <g transform="translate(0, 10)">
+    <circle cx="170" cy="170" r="25" fill="#18181b"/>
+    <circle cx="230" cy="170" r="25" fill="#18181b"/>
+    <path d="M195 170H205" stroke="#18181b" stroke-width="4"/>
+    <path d="M145 170L130 160" stroke="#18181b" stroke-width="4" stroke-linecap="round"/>
+    <path d="M255 170L270 160" stroke="#18181b" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Reflections -->
+    <path d="M160 160L175 160" stroke="white" stroke-width="2" opacity="0.3"/>
+    <path d="M220 160L235 160" stroke="white" stroke-width="2" opacity="0.3"/>
+  </g>
+  
+  <!-- Collar -->
+  <path d="M160 250L200 200L240 250" fill="white" stroke="#e4e4e7" stroke-width="2"/>
+</svg>

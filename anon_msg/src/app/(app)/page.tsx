@@ -1,19 +1,19 @@
-import Image from "next/image";
+// import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemedAutoCarousel } from "@/components/created/carousl";
+import PhoneMockup from "@/components/created/phone-mockup";
+import Link from "next/link";
 
 
 
 import {
-  ShieldAlert,
   UserX,
   Ghost,
   Lock,
-  ArrowRight,
-  MessageCircle
 } from "lucide-react";
+import AppFeatures from "@/components/app-feature";
 
 export default function Home() {
   return (
@@ -55,35 +55,27 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <Link href="/u/suggest-anon-channel">
               <Button size="lg" className="bg-red-600 hover:bg-black text-white rounded-full px-10 h-14 text-lg font-bold transition-all">
+
                 Start Anonymous Chat
               </Button>
+              </Link>
               <Button variant="outline" size="lg" className="rounded-full border-black text-black px-10 h-14 text-lg font-bold hover:bg-zinc-50 transition-all">
                 Learn More
               </Button>
             </div>
           </div>
 
-          {/* Device Mockup (WhatsApp Landing Style) */}
+          {/* Device Mockup */}
           <div className="hidden lg:flex justify-center relative">
-            <div className="w-[300px] h-[600px] bg-black rounded-[3rem] border-10 border-zinc-900 shadow-2xl relative overflow-hidden ring-4 ring-red-600/5">
-              <div className="p-6 pt-16 space-y-4">
-                <div className="bg-zinc-800 text-white p-3 rounded-2xl rounded-tl-none text-xs w-4/5">
-                  "Is this actually anonymous?"
-                </div>
-                <div className="bg-red-600 text-white p-3 rounded-2xl rounded-tr-none text-xs w-4/5 ml-auto">
-                  "100%. No logs, no IDs."
-                </div>
-              </div>
-              <div className="absolute bottom-10 left-0 right-0 px-6">
-                <div className="h-10 bg-zinc-800 rounded-full flex items-center px-4 text-[10px] text-zinc-500">
-                  Type anonymously...
-                </div>
-              </div>
-            </div>
+            <PhoneMockup />
           </div>
         </div>
       </main>
+
+      {/* feture section */}
+      <AppFeatures />
 
       {/* --- FEATURES SECTION --- 
           Area: Core value props. 
@@ -125,26 +117,6 @@ export default function Home() {
           Area: Final closing. 
           Style: Black background, Red highlights.
       */}
-      <footer className="bg-black text-white py-20 px-6">
-        <div className="container max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-center md:text-left">
-            <h2 className="text-3xl font-black italic tracking-tighter">
-              ANON<span className="text-red-600">MSG</span>
-            </h2>
-            <p className="text-zinc-500 mt-2">Privacy isn't a feature, it's the foundation.</p>
-          </div>
-
-          <div className="flex gap-4">
-            <a href="#" className="text-sm font-bold hover:text-red-600 transition-colors">Documentation</a>
-            <a href="#" className="text-sm font-bold hover:text-red-600 transition-colors">Security</a>
-            <a href="#" className="text-sm font-bold hover:text-red-600 transition-colors">GitHub</a>
-          </div>
-        </div>
-        <div className="container max-w-6xl mx-auto mt-12 pt-8 border-t border-zinc-900 text-center text-xs text-zinc-600">
-          © 2025 anonmsg Application. Built with Next.js 16.
-        </div>
-      </footer>
-
     </div>
   );
 }

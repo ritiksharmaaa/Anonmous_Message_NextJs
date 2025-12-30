@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <!-- Background Circle -->
+  <circle cx="200" cy="150" r="100" fill="#fef2f2"/>
+  
+  <!-- Stylized Bird -->
+  <path d="M160 180C160 180 140 160 140 130C140 100 170 80 200 80C230 80 250 100 250 120C250 140 230 150 230 150L260 160L230 170C230 170 220 200 190 200C160 200 160 180 160 180Z" fill="white" stroke="#dc2626" stroke-width="3"/>
+  
+  <!-- Wing -->
+  <path d="M180 140C180 140 200 130 220 140" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Eye -->
+  <circle cx="220" cy="110" r="4" fill="#dc2626"/>
+  
+  <!-- Music Notes / Speech -->
+  <path d="M270 100L280 90L290 100" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="290" cy="140" r="5" fill="#fca5a5"/>
+  <path d="M280 160C290 150 300 170 310 160" stroke="#fca5a5" stroke-width="3" stroke-linecap="round"/>
+</svg>
