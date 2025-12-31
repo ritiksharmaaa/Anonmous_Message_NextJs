@@ -51,56 +51,56 @@ const suggestedChannels = [
 
 export default function SuggestAnonChannelPage() {
     return (
-        <div className="min-h-screen bg-zinc-50/50 py-12 px-4 font-sans selection:bg-red-600 selection:text-white">
+        <div className="min-h-screen bg-surface-muted py-12 px-4 font-sans transition-colors">
             <div className="container mx-auto max-w-4xl">
                 <div className="mb-8 text-center">
-                    <h1 className="text-4xl font-black tracking-tighter text-black mb-2">
-                        Discover <span className="text-red-600">Channels</span>
+                    <h1 className="text-4xl font-black tracking-tighter text-text-primary mb-2">
+                        Discover <span className="text-brand">Channels</span>
                     </h1>
-                    <p className="text-zinc-500">Find interesting people to message anonymously.</p>
+                    <p className="text-text-muted">Find interesting people to message anonymously.</p>
                 </div>
 
-                <Card className="border-none shadow-xl bg-white overflow-hidden">
-                    <CardHeader className="border-b border-zinc-100 pb-6 bg-white">
+                <Card className="border-none shadow-xl bg-surface overflow-hidden">
+                    <CardHeader className="border-b border-border-muted pb-6 bg-surface">
                         <div className="relative">
-                            <Search className="absolute left-3 top-3 h-5 w-5 text-zinc-400" />
+                            <Search className="absolute left-3 top-3 h-5 w-5 text-text-muted" />
                             <Input
                                 placeholder="Search for users..."
-                                className="pl-10 h-12 bg-zinc-50 border-zinc-200 text-black placeholder:text-zinc-400 focus-visible:ring-red-600 focus-visible:border-red-600 rounded-xl transition-all"
+                                className="pl-10 h-12 bg-surface-muted border-border text-text-primary placeholder:text-text-muted focus-visible:ring-focus-ring focus-visible:border-brand rounded-xl transition-all"
                             />
                         </div>
                     </CardHeader>
                     <CardContent className="p-0">
                         <ScrollArea className="h-[600px]">
-                            <div className="flex flex-col divide-y divide-zinc-100">
+                            <div className="flex flex-col divide-y divide-border-muted">
                                 {suggestedChannels.map((channel) => (
                                     <Link
                                         key={channel.id}
                                         href={`/u/${channel.username}`}
-                                        className="group flex items-center gap-4 p-6 transition-all hover:bg-zinc-50 cursor-pointer"
+                                        className="group flex items-center gap-4 p-6 transition-all hover:bg-surface-muted cursor-pointer"
                                     >
-                                        <Avatar className="h-14 w-14 border-2 border-white shadow-sm group-hover:border-red-100 transition-colors">
+                                        <Avatar className="h-14 w-14 border-2 border-surface shadow-sm group-hover:border-brand/20 transition-colors">
                                             <AvatarImage src={channel.avatar} alt={channel.username} />
-                                            <AvatarFallback className="bg-red-50 text-red-600 font-bold text-lg">
+                                            <AvatarFallback className="bg-brand/10 text-brand font-bold text-lg">
                                                 {channel.displayName.substring(0, 2).toUpperCase()}
                                             </AvatarFallback>
                                         </Avatar>
                                         
                                         <div className="flex flex-1 flex-col justify-center overflow-hidden">
                                             <div className="flex items-center justify-between mb-1">
-                                                <span className="font-bold text-lg text-zinc-900 truncate group-hover:text-red-600 transition-colors">
+                                                <span className="font-bold text-lg text-text-primary truncate group-hover:text-brand transition-colors">
                                                     {channel.displayName}
                                                 </span>
-                                                <span className="text-xs font-medium text-zinc-400 whitespace-nowrap ml-2">
+                                                <span className="text-xs font-medium text-text-muted whitespace-nowrap ml-2">
                                                     {channel.timestamp}
                                                 </span>
                                             </div>
                                             <div className="flex items-center justify-between">
-                                                <span className="text-sm text-zinc-500 truncate pr-4 group-hover:text-zinc-700">
+                                                <span className="text-sm text-text-muted truncate pr-4 group-hover:text-text-secondary">
                                                     {channel.lastMessage}
                                                 </span>
                                                 {channel.unread > 0 && (
-                                                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white shadow-sm shadow-red-200">
+                                                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-foreground shadow-sm">
                                                         {channel.unread}
                                                     </span>
                                                 )}

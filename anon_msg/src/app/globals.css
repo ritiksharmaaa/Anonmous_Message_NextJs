@@ -1,176 +1,283 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* -------------------------this is for landing page  */
-/* This is the Tailwind v4 way to define your brand colors */
-@import "tailwindcss";
+/* =============================================================================
+   SEMANTIC TOKEN SYSTEM
+   =============================================================================
+   This design system uses CSS custom properties for theming.
+   Light theme is the default, dark theme activates via [data-theme="dark"] on <html>.
+   
+   Token Naming Convention:
+   - Background & Surfaces: --background, --surface, --surface-muted
+   - Text: --text-primary, --text-secondary, --text-muted, --text-inverse
+   - Borders: --border, --border-muted, --focus-ring
+   - Brand: --brand, --brand-hover, --brand-active, --brand-muted
+   - Status: --success, --warning, --danger, --info
+   ============================================================================= */
 
-@theme {
-  /* Major: White */
-  --color-background: #ffffff;
-  --color-foreground: #000000;
+/* Tailwind v4 custom dark variant using data attribute */
+@custom-variant dark (&:is([data-theme="dark"] *));
 
-  /* Minor: Red (The Action Color) */
-  --color-primary: #dc2626; 
-  --color-primary-foreground: #ffffff;
-
-  /* Minor: Black (The Contrast Color) */
-  --color-secondary: #111111;
-  --color-secondary-foreground: #ffffff;
-
-  /* Shadcn UI Variables */
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-accent: #fee2e2;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-ring: #dc2626;
-
-  --radius-xl: 1rem;
-  --radius-lg: 0.5rem;
-}
-
-/* Base styles to match your provided snippet */
-@layer base {
-  body {
-    @apply bg-white text-black font-sans;
-  }
-}
-
-/* Custom selection to match red theme */
-::selection {
-  background-color: #dc2626;
-  color: white;
-}
-/* Optional: WhatsApp-style Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom Selection Color (Red highlight when dragging mouse) */
-::selection {
-  background-color: #dc2626;
-  color: white;
-}
-
-/* ----------------------------- */
-
-@custom-variant dark (&:is(.dark *));
-
+/* =============================================================================
+   THEME INLINE - Expose CSS variables to Tailwind
+   ============================================================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
+  
+  /* Core backgrounds */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  
+  /* Text hierarchy */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  
+  /* Borders */
   --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
+  --color-border-muted: var(--border-muted);
+  --color-focus-ring: var(--focus-ring);
+  
+  /* Brand colors (Red - primary action) */
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-active: var(--brand-active);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-foreground: var(--brand-foreground);
+  
+  /* Status colors */
+  --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
+  --color-warning: var(--warning);
+  --color-warning-muted: var(--warning-muted);
+  --color-danger: var(--danger);
+  --color-danger-muted: var(--danger-muted);
+  --color-info: var(--info);
+  --color-info-muted: var(--info-muted);
+  
+  /* Shadcn UI compatibility */
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root {
+/* =============================================================================
+   LIGHT THEME (Default)
+   Design: White major background, Red brand color, Zinc text hierarchy
+   ============================================================================= */
+:root,
+[data-theme="light"] {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  
+  /* Core backgrounds - Mapped from existing design */
+  --background: #ffffff;              /* white - main page background */
+  --foreground: #000000;              /* black - main text */
+  --surface: #ffffff;                 /* white - cards, modals */
+  --surface-muted: #fafafa;           /* zinc-50 - sections, inputs */
+  --surface-elevated: #ffffff;        /* white - elevated elements */
+  
+  /* Text hierarchy - Mapped from existing usage */
+  --text-primary: #09090b;            /* zinc-950 - headings, primary text */
+  --text-secondary: #52525b;          /* zinc-600 - secondary text, nav links */
+  --text-muted: #71717a;              /* zinc-500 - muted text, descriptions */
+  --text-inverse: #ffffff;            /* white - text on dark/brand backgrounds */
+  
+  /* Borders - Mapped from existing border-zinc-* usage */
+  --border: #e4e4e7;                  /* zinc-200 - default borders */
+  --border-muted: #f4f4f5;            /* zinc-100 - subtle borders */
+  --focus-ring: #dc2626;              /* red-600 - focus ring color */
+  
+  /* Brand (Red) - Mapped from existing red-* usage */
+  --brand: #dc2626;                   /* red-600 - primary brand */
+  --brand-hover: #b91c1c;             /* red-700 - hover state */
+  --brand-active: #991b1b;            /* red-800 - active/pressed state */
+  --brand-muted: #fef2f2;             /* red-50 - muted brand background */
+  --brand-foreground: #ffffff;        /* white - text on brand */
+  
+  /* Status colors */
+  --success: #16a34a;                 /* green-600 */
+  --success-muted: #f0fdf4;           /* green-50 */
+  --warning: #ca8a04;                 /* yellow-600 */
+  --warning-muted: #fefce8;           /* yellow-50 */
+  --danger: #dc2626;                  /* red-600 */
+  --danger-muted: #fef2f2;            /* red-50 */
+  --info: #2563eb;                    /* blue-600 */
+  --info-muted: #eff6ff;              /* blue-50 */
+  
+  /* Shadcn UI Compatibility - Keeping existing oklch values but updated for consistency */
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  --primary: #18181b;                 /* zinc-900 - Shadcn default button */
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;               /* zinc-100 */
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;                   /* zinc-100 */
+  --muted-foreground: #71717a;        /* zinc-500 */
+  --accent: #f4f4f5;                  /* zinc-100 */
+  --accent-foreground: #18181b;
+  --destructive: #dc2626;             /* red-600 */
+  --input: #e4e4e7;                   /* zinc-200 */
+  --ring: #a1a1aa;                    /* zinc-400 */
+  
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Sidebar */
+  --sidebar: #fafafa;
+  --sidebar-foreground: #09090b;
+  --sidebar-primary: #18181b;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #a1a1aa;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+/* =============================================================================
+   DARK THEME
+   Design: Dark zinc backgrounds, Red brand preserved, Inverted text hierarchy
+   Note: Avoiding pure black (#000) for better contrast and eye comfort
+   ============================================================================= */
+[data-theme="dark"] {
+  /* Core backgrounds - Elevated surfaces instead of shadows */
+  --background: #18181b;              /* zinc-900 - main page background */
+  --foreground: #fafafa;              /* zinc-50 - main text */
+  --surface: #27272a;                 /* zinc-800 - cards, modals */
+  --surface-muted: #1f1f23;           /* slightly lighter than bg */
+  --surface-elevated: #3f3f46;        /* zinc-700 - elevated elements */
+  
+  /* Text hierarchy - Inverted for dark mode */
+  --text-primary: #fafafa;            /* zinc-50 - headings, primary text */
+  --text-secondary: #a1a1aa;          /* zinc-400 - secondary text */
+  --text-muted: #71717a;              /* zinc-500 - muted text */
+  --text-inverse: #09090b;            /* zinc-950 - text on light backgrounds */
+  
+  /* Borders - Subtle on dark */
+  --border: #3f3f46;                  /* zinc-700 */
+  --border-muted: #27272a;            /* zinc-800 */
+  --focus-ring: #ef4444;              /* red-500 - slightly brighter for visibility */
+  
+  /* Brand (Red) - Adjusted for dark mode contrast */
+  --brand: #ef4444;                   /* red-500 - slightly brighter */
+  --brand-hover: #dc2626;             /* red-600 */
+  --brand-active: #b91c1c;            /* red-700 */
+  --brand-muted: #450a0a;             /* red-950 - dark muted brand */
+  --brand-foreground: #ffffff;
+  
+  /* Status colors - Adjusted for dark mode */
+  --success: #22c55e;                 /* green-500 */
+  --success-muted: #14532d;           /* green-900 */
+  --warning: #eab308;                 /* yellow-500 */
+  --warning-muted: #422006;           /* yellow-950 */
+  --danger: #ef4444;                  /* red-500 */
+  --danger-muted: #450a0a;            /* red-950 */
+  --info: #3b82f6;                    /* blue-500 */
+  --info-muted: #1e3a5f;              /* blue-900 */
+  
+  /* Shadcn UI Compatibility - Dark mode values */
+  --card: #27272a;
+  --card-foreground: #fafafa;
+  --popover: #27272a;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #3f3f46;
+  --secondary-foreground: #fafafa;
+  --muted: #3f3f46;
+  --muted-foreground: #a1a1aa;
+  --accent: #3f3f46;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --input: #3f3f46;
+  --ring: #52525b;
+  
+  /* Charts - Dark mode */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  
+  /* Sidebar */
+  --sidebar: #1f1f23;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #ef4444;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #3f3f46;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #3f3f46;
+  --sidebar-ring: #52525b;
 }
 
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    /* Smooth color transitions for theme switching */
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
+}
+
+/* Custom selection to match brand theme */
+::selection {
+  background-color: var(--brand);
+  color: var(--brand-foreground);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

@@ -3,49 +3,49 @@ import Logo from '@/components/created/logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-900 text-white py-16 mt-auto">
+    <footer className="bg-zinc-900 dark:bg-surface text-white dark:text-text-primary py-16 mt-auto transition-colors">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Logo size="md" variant="dark" />
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <p className="text-zinc-400 dark:text-text-muted text-sm leading-relaxed">
               Privacy isn't a feature, it's the foundation.
             </p>
           </div>
           
           <div>
-            <h3 className="font-bold text-white mb-4">Product</h3>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li><Link href="/dashboard" className="hover:text-red-500 transition-colors">Dashboard</Link></li>
-              <li><Link href="/sign-up" className="hover:text-red-500 transition-colors">Get Started</Link></li>
+            <h3 className="font-bold text-white dark:text-text-primary mb-4">Product</h3>
+            <ul className="space-y-2 text-sm text-zinc-400 dark:text-text-muted">
+              <li><Link href="/dashboard" className="hover:text-brand transition-colors">Dashboard</Link></li>
+              <li><Link href="/sign-up" className="hover:text-brand transition-colors">Get Started</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-bold text-white mb-4">Company</h3>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li><Link href="/about" className="hover:text-red-500 transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-red-500 transition-colors">Contact</Link></li>
+            <h3 className="font-bold text-white dark:text-text-primary mb-4">Company</h3>
+            <ul className="space-y-2 text-sm text-zinc-400 dark:text-text-muted">
+              <li><Link href="/about" className="hover:text-brand transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="hover:text-brand transition-colors">Contact</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-bold text-white mb-4">Legal</h3>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li><Link href="/privacy-policy" className="hover:text-red-500 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms-of-service" className="hover:text-red-500 transition-colors">Terms of Service</Link></li>
+            <h3 className="font-bold text-white dark:text-text-primary mb-4">Legal</h3>
+            <ul className="space-y-2 text-sm text-zinc-400 dark:text-text-muted">
+              <li><Link href="/privacy-policy" className="hover:text-brand transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms-of-service" className="hover:text-brand transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-zinc-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+        <div className="border-t border-zinc-800 dark:border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500 dark:text-text-muted">
           <p>&copy; {new Date().getFullYear()} anonmsg. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a 
               href="https://github.com/ritiksharmaaa" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-400 dark:text-text-muted hover:text-white dark:hover:text-text-primary transition-colors"
               aria-label="GitHub"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -56,7 +56,7 @@ export default function Footer() {
               href="https://www.linkedin.com/in/ritiksharmaaa/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-[#0A66C2] transition-colors"
+              className="text-zinc-400 dark:text-text-muted hover:text-[#0A66C2] transition-colors"
               aria-label="LinkedIn"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

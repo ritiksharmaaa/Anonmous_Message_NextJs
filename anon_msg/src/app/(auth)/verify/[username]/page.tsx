@@ -54,19 +54,19 @@ export default function VerifyPage() {
 	};
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 font-sans selection:bg-red-600 selection:text-white">
-			<div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-zinc-100">
+		<div className="flex min-h-screen items-center justify-center bg-surface-muted px-4 font-sans transition-colors">
+			<div className="w-full max-w-md p-8 bg-surface rounded-2xl shadow-xl border border-border-muted">
 				<div className="text-center mb-8">
 					<Link href="/" className="inline-block mb-6">
 						<svg width="140" height="44" viewBox="0 0 140 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<text x="50%" y="32" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontWeight="bold" fontSize="32">
-								<tspan fill="black">anon</tspan><tspan fill="#E11D48">msg</tspan>
+								<tspan className="fill-text-primary">anon</tspan><tspan className="fill-brand">msg</tspan>
 							</text>
 						</svg>
 					</Link>
-					<h1 className="text-2xl font-black tracking-tight text-zinc-900">Verify Account</h1>
-					<p className="text-zinc-500 mt-2 text-sm">
-						Enter the verification code sent to your email for <span className="font-bold text-zinc-900">@{username}</span>
+					<h1 className="text-2xl font-black tracking-tight text-text-primary">Verify Account</h1>
+					<p className="text-text-muted mt-2 text-sm">
+						Enter the verification code sent to your email for <span className="font-bold text-text-primary">@{username}</span>
 					</p>
 				</div>
 
@@ -77,7 +77,7 @@ export default function VerifyPage() {
 							name="code"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel className="text-zinc-700 font-semibold">Verification Code</FormLabel>
+									<FormLabel className="text-text-secondary font-semibold">Verification Code</FormLabel>
 									<FormControl>
 										<Input
 											id="code"
@@ -85,7 +85,7 @@ export default function VerifyPage() {
 											maxLength={6}
 											placeholder="123456"
 											autoComplete="one-time-code"
-											className="bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 h-11 text-center text-lg tracking-widest font-mono"
+											className="bg-surface-muted border-border focus-visible:ring-focus-ring h-11 text-center text-lg tracking-widest font-mono"
 											{...field}
 										/>
 									</FormControl>
@@ -96,7 +96,7 @@ export default function VerifyPage() {
 						<Button 
 							type="submit" 
 							disabled={loading} 
-							className="w-full bg-red-600 hover:bg-red-700 text-white font-bold h-11 rounded-lg transition-all"
+							className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold h-11 rounded-lg transition-all"
 						>
 							{loading ? (
 								<>
@@ -111,9 +111,9 @@ export default function VerifyPage() {
 				</Form>
 				
 				<div className="mt-8 text-center">
-					<p className="text-sm text-zinc-500">
+					<p className="text-sm text-text-muted">
 						Didn't receive the code?{" "}
-						<button className="text-red-600 hover:text-red-700 font-bold hover:underline bg-transparent border-none cursor-pointer">
+						<button className="text-brand hover:text-brand-hover font-bold hover:underline bg-transparent border-none cursor-pointer">
 							Resend
 						</button>
 					</p>

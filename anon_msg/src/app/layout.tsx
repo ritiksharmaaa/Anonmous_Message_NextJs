@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";// not require if you move this to (app) we do access in the other way 
 import AuthProvider from "@/context/authProvider";
+import { ThemeProvider, themeInitScript } from "@/context/themeProvider";
 import { Toaster } from "@/components/ui/sonner"
 import Navbar from "@/components/created/navbar";
 
@@ -27,15 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <AuthProvider >
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-                <Toaster />
-
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Prevent flash of wrong theme */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <meta name="theme-color" content="#ffffff" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AuthProvider>
+          <ThemeProvider>
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </AuthProvider>
+      </body>
     </html>
   );
 }

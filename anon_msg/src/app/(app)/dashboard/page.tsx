@@ -108,7 +108,7 @@ const Page = () => {
   };
 
   if (!session || !session.user) {
-    return <div className="flex justify-center items-center min-h-screen">Please log in to view your dashboard.</div>;
+    return <div className="flex justify-center items-center min-h-screen bg-background text-text-primary transition-colors">Please log in to view your dashboard.</div>;
   }
 
   const username = (session.user as User & { username?: string }).username || (session.user as any).name || '';
@@ -129,25 +129,25 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-12 px-4 lg:px-8 font-sans selection:bg-red-600 selection:text-white">
+    <div className="min-h-screen bg-surface-muted py-12 px-4 lg:px-8 font-sans transition-colors">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-zinc-900">User Dashboard</h1>
-            <p className="text-zinc-500 mt-1">Manage your settings and view your messages.</p>
+            <h1 className="text-3xl font-black tracking-tight text-text-primary">User Dashboard</h1>
+            <p className="text-text-muted mt-1">Manage your settings and view your messages.</p>
           </div>
-          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">
-            <UserIcon className="h-4 w-4 text-red-600" />
-            <span className="font-bold text-sm text-zinc-700">@{username}</span>
+          <div className="flex items-center gap-2 bg-surface px-4 py-2 rounded-full shadow-sm border border-border-muted">
+            <UserIcon className="h-4 w-4 text-brand" />
+            <span className="font-bold text-sm text-text-secondary">@{username}</span>
           </div>
         </div>
 
         {/* Link Section */}
-        <Card className="border-none shadow-md bg-white">
+        <Card className="border-none shadow-md bg-surface">
           <CardHeader>
-            <CardTitle className="text-lg font-bold text-zinc-800">Your Unique Link</CardTitle>
+            <CardTitle className="text-lg font-bold text-text-primary">Your Unique Link</CardTitle>
             <CardDescription>Share this link to receive anonymous messages.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -156,9 +156,9 @@ const Page = () => {
                 type="text" 
                 value={profileUrl} 
                 readOnly 
-                className="bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 font-mono text-sm" 
+                className="bg-surface-muted border-border focus-visible:ring-focus-ring font-mono text-sm" 
               />
-              <Button onClick={copyToClipboard} className="bg-black hover:bg-zinc-800 text-white font-bold shrink-0">
+              <Button onClick={copyToClipboard} className="bg-text-primary hover:bg-text-secondary text-text-inverse font-bold shrink-0">
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
@@ -167,12 +167,12 @@ const Page = () => {
         </Card>
 
         {/* Settings Section */}
-        <Card className="border-none shadow-md bg-white">
+        <Card className="border-none shadow-md bg-surface">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <h3 className="text-lg font-bold text-zinc-800">Accept Messages</h3>
-                <p className="text-sm text-zinc-500">Enable or disable receiving new anonymous messages.</p>
+                <h3 className="text-lg font-bold text-text-primary">Accept Messages</h3>
+                <p className="text-sm text-text-muted">Enable or disable receiving new anonymous messages.</p>
               </div>
               <div className="flex items-center gap-2">
                 <Switch
@@ -180,26 +180,26 @@ const Page = () => {
                   checked={!!watchAcceptMessages}
                   onCheckedChange={handleSwitchChange}
                   disabled={isSwitchLoading}
-                  className="data-[state=checked]:bg-red-600"
+                  className="data-[state=checked]:bg-brand"
                 />
-                {isSwitchLoading && <Loader2 className="w-4 h-4 animate-spin text-zinc-400" />}
+                {isSwitchLoading && <Loader2 className="w-4 h-4 animate-spin text-text-muted" />}
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Separator className="bg-zinc-200" />
+        <Separator className="bg-border" />
 
         {/* Messages Section */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-zinc-900">Your Messages</h2>
+            <h2 className="text-2xl font-bold text-text-primary">Your Messages</h2>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={() => fetchMessages()} 
               disabled={loading}
-              className="border-zinc-200 hover:bg-zinc-50 text-zinc-600"
+              className="border-border hover:bg-surface-muted text-text-secondary"
             >
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
             </Button>
@@ -208,13 +208,13 @@ const Page = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-40 bg-zinc-100 rounded-xl animate-pulse" />
+                <div key={i} className="h-40 bg-surface-muted rounded-xl animate-pulse" />
               ))}
             </div>
           ) : messages.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-zinc-200">
-              <p className="text-zinc-400 font-medium">No messages yet.</p>
-              <p className="text-zinc-300 text-sm mt-1">Share your link to get started!</p>
+            <div className="text-center py-16 bg-surface rounded-2xl border border-dashed border-border">
+              <p className="text-text-muted font-medium">No messages yet.</p>
+              <p className="text-text-muted/70 text-sm mt-1">Share your link to get started!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

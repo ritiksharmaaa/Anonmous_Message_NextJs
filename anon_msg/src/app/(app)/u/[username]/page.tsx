@@ -125,21 +125,21 @@ export default function SendMessagePage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-4 font-sans">
+    <div className="min-h-screen bg-surface-muted flex flex-col items-center justify-center p-4 font-sans transition-colors">
       <div className="w-full max-w-2xl space-y-8">
         
         {/* Header Section */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-black tracking-tighter text-black">
+          <h1 className="text-4xl font-black tracking-tighter text-text-primary">
             Public Profile Link
           </h1>
-          <p className="text-zinc-500">
-            Send a secret message to <span className="font-bold text-red-600">@{username}</span>
+          <p className="text-text-muted">
+            Send a secret message to <span className="font-bold text-brand">@{username}</span>
           </p>
         </div>
 
         {/* Message Form Card */}
-        <Card className="border-none shadow-xl bg-white">
+        <Card className="border-none shadow-xl bg-surface">
           <CardHeader>
             <CardTitle className="text-xl font-bold">Send Anonymous Message</CardTitle>
             <CardDescription>
@@ -149,13 +149,13 @@ export default function SendMessagePage() {
           <CardContent>
             {!hasChecked ? (
               <div className="flex flex-col items-center justify-center space-y-4 py-6">
-                <p className="text-zinc-600 text-center">
+                <p className="text-text-secondary text-center">
                   Check if @{username} is accepting anonymous messages right now.
                 </p>
                 <Button 
                   onClick={checkAcceptance} 
                   disabled={isCheckingAcceptance}
-                  className="w-full md:w-auto bg-red-600 hover:bg-zinc-800 text-white font-bold"
+                  className="w-full md:w-auto bg-brand hover:bg-brand-hover text-brand-foreground font-bold"
                 >
                   {isCheckingAcceptance ? (
                     <>
@@ -168,11 +168,11 @@ export default function SendMessagePage() {
                 </Button>
               </div>
             ) : !isAcceptingMessages ? (
-              <div className="p-6 bg-red-50 border border-red-100 rounded-lg text-center">
-                <p className="text-red-600 font-medium">
+              <div className="p-6 bg-status-error/10 border border-status-error/20 rounded-lg text-center">
+                <p className="text-status-error font-medium">
                   This user is currently not accepting messages.
                 </p>
-                <Button variant="outline" onClick={() => setHasChecked(false)} className="mt-4 border-red-200 text-red-600 hover:bg-red-50">Check Again</Button>
+                <Button variant="outline" onClick={() => setHasChecked(false)} className="mt-4 border-status-error/30 text-status-error hover:bg-status-error/10">Check Again</Button>
               </div>
             ) : (
               <Form {...form}>
@@ -186,7 +186,7 @@ export default function SendMessagePage() {
                         <FormControl>
                           <Textarea
                             placeholder="Type your anonymous message here..."
-                            className="resize-none min-h-[150px] bg-zinc-50 border-zinc-200 focus-visible:ring-red-600"
+                            className="resize-none min-h-[150px] bg-surface-muted border-border focus-visible:ring-focus-ring"
                             {...field}
                           />
                         </FormControl>
@@ -199,7 +199,7 @@ export default function SendMessagePage() {
                     <Button 
                       type="submit" 
                       disabled={isLoading || !messageContent}
-                      className="bg-black hover:bg-zinc-800 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                      className="bg-text-primary hover:bg-text-secondary text-surface font-bold py-2 px-6 rounded-lg transition-all"
                     >
                       {isLoading ? (
                         <>
@@ -223,12 +223,12 @@ export default function SendMessagePage() {
         {/* Suggestions Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-zinc-700">Need inspiration?</h3>
+            <h3 className="text-lg font-bold text-text-secondary">Need inspiration?</h3>
             <Button 
               variant="outline" 
               onClick={fetchSuggestedMessages}
               disabled={isSuggestLoading}
-              className="text-xs h-8 border-zinc-300 hover:bg-zinc-100"
+              className="text-xs h-8 border-border hover:bg-surface-muted"
             >
               {isSuggestLoading ? (
                 <Loader2 className="h-3 w-3 animate-spin mr-1" />
@@ -244,7 +244,7 @@ export default function SendMessagePage() {
               <button
                 key={index}
                 onClick={() => handleMessageClick(message)}
-                className="text-left p-4 rounded-xl bg-white border border-zinc-200 hover:border-red-200 hover:bg-red-50/30 transition-all shadow-sm text-sm text-zinc-600 hover:text-zinc-900 font-medium"
+                className="text-left p-4 rounded-xl bg-surface border border-border hover:border-brand/30 hover:bg-brand/5 transition-all shadow-sm text-sm text-text-secondary hover:text-text-primary font-medium"
               >
                 {message}
               </button>
@@ -252,15 +252,15 @@ export default function SendMessagePage() {
           </div>
         </div>
 
-        <Separator className="my-8 bg-zinc-200" />
+        <Separator className="my-8 bg-border" />
 
         {/* Footer CTA */}
         <div className="text-center space-y-4">
-          <p className="text-zinc-500 text-sm">
+          <p className="text-text-muted text-sm">
             Want to receive anonymous messages too?
           </p>
           <Link href="/sign-up">
-            <Button variant="outline" className="border-black text-black hover:bg-zinc-50 font-bold">
+            <Button variant="outline" className="border-text-primary text-text-primary hover:bg-surface-muted font-bold">
               Create Your Own Board
             </Button>
           </Link>

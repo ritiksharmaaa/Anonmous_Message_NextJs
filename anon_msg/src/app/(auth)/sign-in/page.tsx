@@ -52,13 +52,13 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-sans selection:bg-red-600 selection:text-white">
-      {/* Left Panel - Branding */}
+    <div className="min-h-screen flex font-sans">
+      {/* Left Panel - Branding (intentionally dark, not theme-dependent) */}
       <div className="hidden lg:flex lg:w-1/2 bg-zinc-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900" />
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-red-600/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-red-600/10 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-20 w-72 h-72 bg-brand/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-brand/10 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           <Logo size="lg" variant="dark" />
@@ -67,7 +67,7 @@ export default function SignInPage() {
             <div>
               <h2 className="text-4xl font-black text-white leading-tight">
                 Welcome back to<br />
-                <span className="text-red-500">Anonymous</span> Messaging
+                <span className="text-brand">Anonymous</span> Messaging
               </h2>
               <p className="text-zinc-400 mt-4 text-lg leading-relaxed max-w-md">
                 Sign in to continue receiving honest feedback and anonymous messages from your community.
@@ -95,17 +95,17 @@ export default function SignInPage() {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-zinc-50 px-6 py-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-surface-muted px-6 py-12 transition-colors">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-10 flex justify-center">
-            <Logo size="lg" variant="light" />
+            <Logo size="lg" />
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-zinc-200">
+          <div className="bg-surface p-8 rounded-2xl shadow-sm border border-border">
             <div className="mb-8 text-center">
-              <h1 className="text-2xl font-black tracking-tight text-zinc-900">Sign in to your account</h1>
-              <p className="text-zinc-500 mt-2 text-sm">Enter your credentials to continue</p>
+              <h1 className="text-2xl font-black tracking-tight text-text-primary">Sign in to your account</h1>
+              <p className="text-text-muted mt-2 text-sm">Enter your credentials to continue</p>
             </div>
 
             <Form {...form}>
@@ -115,13 +115,13 @@ export default function SignInPage() {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-700 font-medium text-sm">Username or Email</FormLabel>
+                      <FormLabel className="text-text-secondary font-medium text-sm">Username or Email</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
                           <Input 
                             placeholder="Enter your username or email" 
-                            className="pl-10 bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 focus-visible:ring-offset-0 h-12 rounded-xl text-sm" 
+                            className="pl-10 bg-surface-muted border-border focus-visible:ring-focus-ring focus-visible:ring-offset-0 h-12 rounded-xl text-sm" 
                             {...field} 
                           />
                         </div>
@@ -136,18 +136,18 @@ export default function SignInPage() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center justify-between">
-                        <FormLabel className="text-zinc-700 font-medium text-sm">Password</FormLabel>
-                        <Link href="#" className="text-xs text-red-600 hover:text-red-700 font-medium">
+                        <FormLabel className="text-text-secondary font-medium text-sm">Password</FormLabel>
+                        <Link href="#" className="text-xs text-brand hover:text-brand-hover font-medium">
                           Forgot password?
                         </Link>
                       </div>
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
                           <Input 
                             type="password" 
                             placeholder="••••••••" 
-                            className="pl-10 bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 focus-visible:ring-offset-0 h-12 rounded-xl text-sm" 
+                            className="pl-10 bg-surface-muted border-border focus-visible:ring-focus-ring focus-visible:ring-offset-0 h-12 rounded-xl text-sm" 
                             {...field} 
                           />
                         </div>
@@ -159,7 +159,7 @@ export default function SignInPage() {
                 <Button 
                   type="submit" 
                   disabled={loading} 
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold h-12 rounded-xl transition-all shadow-sm shadow-red-600/20 group"
+                  className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold h-12 rounded-xl transition-all shadow-sm shadow-brand/20 group"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">
@@ -181,16 +181,16 @@ export default function SignInPage() {
 
             <div className="mt-8">
               <div className="flex items-center gap-4">
-                <div className="flex-grow h-px bg-zinc-200" />
-                <span className="text-zinc-400 text-xs font-medium uppercase tracking-wider">Or</span>
-                <div className="flex-grow h-px bg-zinc-200" />
+                <div className="flex-grow h-px bg-border" />
+                <span className="text-text-muted text-xs font-medium uppercase tracking-wider">Or</span>
+                <div className="flex-grow h-px bg-border" />
               </div>
               
               <div className="flex flex-col gap-3 mt-6">
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full h-12 rounded-xl border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 font-medium transition-all"
+                  className="w-full h-12 rounded-xl border-border hover:bg-surface-muted hover:border-border text-text-secondary font-medium transition-all"
                   onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
                 >
                   <svg className="mr-2" width="18" height="18" viewBox="0 0 24 24">
@@ -204,7 +204,7 @@ export default function SignInPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full h-12 rounded-xl border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 font-medium transition-all"
+                  className="w-full h-12 rounded-xl border-border hover:bg-surface-muted hover:border-border text-text-secondary font-medium transition-all"
                   onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
                 >
                   <svg className="mr-2" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -216,9 +216,9 @@ export default function SignInPage() {
             </div>
           </div>
 
-          <p className="text-center text-sm text-zinc-500 mt-8">
+          <p className="text-center text-sm text-text-muted mt-8">
             Don't have an account?{" "}
-            <Link href="/sign-up" className="text-red-600 hover:text-red-700 font-bold hover:underline">
+            <Link href="/sign-up" className="text-brand hover:text-brand-hover font-bold hover:underline">
               Create account
             </Link>
           </p>

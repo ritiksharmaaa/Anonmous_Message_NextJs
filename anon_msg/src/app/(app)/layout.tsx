@@ -1,6 +1,11 @@
 import Navbar from "@/components/created/navbar";
 import Footer from "@/components/created/footer";
 
+
+export const metadata = {
+  title: "AnonMsg",
+};
+
 export default function AppLayout({
   children,
 }: {

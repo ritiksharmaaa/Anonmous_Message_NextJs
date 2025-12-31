@@ -32,17 +32,17 @@ const features = [
 
 export default function AppFeatures() {
   return (
-    <section className="bg-zinc-50 py-20 px-6 font-sans">
+    <section className="bg-surface-muted py-20 px-6 font-sans transition-colors">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <span className="text-red-600 font-bold text-sm uppercase tracking-wider">
+          <span className="text-brand font-bold text-sm uppercase tracking-wider">
             Features
           </span>
-          <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-zinc-900">
-            Everything you need for <span className="text-red-600">anonymous</span> messaging
+          <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-text-primary">
+            Everything you need for <span className="text-brand">anonymous</span> messaging
           </h2>
-          <p className="text-zinc-500 max-w-2xl mx-auto text-lg">
+          <p className="text-text-muted max-w-2xl mx-auto text-lg">
             Built with privacy at its core. Share your thoughts without revealing who you are.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function AppFeatures() {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-2xl p-12 flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-shadow duration-300 border border-zinc-100"
+              className="bg-surface rounded-2xl p-12 flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-shadow duration-300 border border-border-muted"
             >
               <div className="mb-8 w-full flex justify-center min-h-[240px] items-center">
                 <Image 
@@ -62,10 +62,10 @@ export default function AppFeatures() {
                   className="max-w-full h-auto max-h-[260px] object-contain"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-zinc-900 mb-4">
+              <h3 className="text-2xl font-bold text-text-primary mb-4">
                 {feature.title}
               </h3>
-              <p className="text-zinc-500 text-lg leading-relaxed max-w-[85%]">
+              <p className="text-text-muted text-lg leading-relaxed max-w-[85%]">
                 {feature.text}
               </p>
             </div>

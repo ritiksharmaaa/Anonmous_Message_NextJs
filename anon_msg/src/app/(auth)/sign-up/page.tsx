@@ -106,13 +106,13 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-sans selection:bg-red-600 selection:text-white">
-      {/* Left Panel - Branding */}
+    <div className="min-h-screen flex font-sans">
+      {/* Left Panel - Branding (intentionally dark, not theme-dependent) */}
       <div className="hidden lg:flex lg:w-1/2 bg-zinc-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900" />
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-red-600/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-red-600/10 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-20 w-72 h-72 bg-brand/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-brand/10 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           <Logo size="lg" variant="dark" />
@@ -121,7 +121,7 @@ export default function SignUpPage() {
             <div>
               <h2 className="text-4xl font-black text-white leading-tight">
                 Start receiving<br />
-                <span className="text-red-500">Anonymous</span> Messages
+                <span className="text-brand">Anonymous</span> Messages
               </h2>
               <p className="text-zinc-400 mt-4 text-lg leading-relaxed max-w-md">
                 Create your free account and get your unique link to share with friends, followers, and communities.
@@ -131,7 +131,7 @@ export default function SignUpPage() {
             {/* Features */}
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500">
+                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-brand">
                   <Shield size={20} />
                 </div>
                 <div>
@@ -140,7 +140,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500">
+                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-brand">
                   <Zap size={20} />
                 </div>
                 <div>
@@ -149,7 +149,7 @@ export default function SignUpPage() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-red-500">
+                <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-brand">
                   <Eye size={20} />
                 </div>
                 <div>
@@ -167,17 +167,17 @@ export default function SignUpPage() {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-zinc-50 px-6 py-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-surface-muted px-6 py-12 transition-colors">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-10 flex justify-center">
-            <Logo size="lg" variant="light" />
+            <Logo size="lg" />
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-zinc-200">
+          <div className="bg-surface p-8 rounded-2xl shadow-sm border border-border">
             <div className="mb-8 text-center">
-              <h1 className="text-2xl font-black tracking-tight text-zinc-900">Create your account</h1>
-              <p className="text-zinc-500 mt-2 text-sm">Start your anonymous journey today</p>
+              <h1 className="text-2xl font-black tracking-tight text-text-primary">Create your account</h1>
+              <p className="text-text-muted mt-2 text-sm">Start your anonymous journey today</p>
             </div>
 
             <Form {...form}>
@@ -187,15 +187,15 @@ export default function SignUpPage() {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-700 font-medium text-sm">
+                      <FormLabel className="text-text-secondary font-medium text-sm">
                         Username
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
                           <Input
                             placeholder="Choose a unique username"
-                            className="pl-10 pr-10 bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
+                            className="pl-10 pr-10 bg-surface-muted border-border focus-visible:ring-focus-ring focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
                             {...field}
                             onChange={(e) => {
                               field.onChange(e);
@@ -203,13 +203,13 @@ export default function SignUpPage() {
                             }}
                           />
                           {isCheckingUsername && (
-                            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-zinc-400" />
+                            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-text-muted" />
                           )}
                           {!isCheckingUsername && userMessage === "Username is unique" && (
-                            <Check className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" />
+                            <Check className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-success" />
                           )}
                           {!isCheckingUsername && userMessage && userMessage !== "Username is unique" && (
-                            <X className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-red-600" />
+                            <X className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-danger" />
                           )}
                         </div>
                       </FormControl>
@@ -217,8 +217,8 @@ export default function SignUpPage() {
                         <p
                           className={`text-xs font-medium mt-1.5 ${
                             userMessage === "Username is unique"
-                              ? "text-green-600"
-                              : "text-red-600"
+                              ? "text-success"
+                              : "text-danger"
                           }`}
                         >
                           {userMessage}
@@ -233,16 +233,16 @@ export default function SignUpPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-700 font-medium text-sm">
+                      <FormLabel className="text-text-secondary font-medium text-sm">
                         Email
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
                           <Input
                             type="email"
                             placeholder="Enter your email"
-                            className="pl-10 bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
+                            className="pl-10 bg-surface-muted border-border focus-visible:ring-focus-ring focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
                             {...field}
                           />
                         </div>
@@ -256,16 +256,16 @@ export default function SignUpPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-700 font-medium text-sm">
+                      <FormLabel className="text-text-secondary font-medium text-sm">
                         Password
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
                           <Input
                             type="password"
                             placeholder="Create a strong password"
-                            className="pl-10 bg-zinc-50 border-zinc-200 focus-visible:ring-red-600 focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
+                            className="pl-10 bg-surface-muted border-border focus-visible:ring-focus-ring focus-visible:ring-offset-0 h-12 rounded-xl text-sm"
                             {...field}
                           />
                         </div>
@@ -277,7 +277,7 @@ export default function SignUpPage() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold h-12 rounded-xl transition-all shadow-sm shadow-red-600/20 group"
+                  className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold h-12 rounded-xl transition-all shadow-sm shadow-brand/20 group"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -294,23 +294,23 @@ export default function SignUpPage() {
               </form>
             </Form>
 
-            <p className="text-xs text-zinc-500 text-center mt-6">
+            <p className="text-xs text-text-muted text-center mt-6">
               By signing up, you agree to our{" "}
-              <Link href="/terms-of-service" className="text-red-600 hover:underline">
+              <Link href="/terms-of-service" className="text-brand hover:underline">
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link href="/privacy-policy" className="text-red-600 hover:underline">
+              <Link href="/privacy-policy" className="text-brand hover:underline">
                 Privacy Policy
               </Link>
             </p>
           </div>
 
-          <p className="text-center text-sm text-zinc-500 mt-8">
+          <p className="text-center text-sm text-text-muted mt-8">
             Already have an account?{" "}
             <Link
               href="/sign-in"
-              className="text-red-600 hover:text-red-700 font-bold hover:underline"
+              className="text-brand hover:text-brand-hover font-bold hover:underline"
             >
               Sign in
             </Link>

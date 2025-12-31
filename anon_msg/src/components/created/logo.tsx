@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { MessageSquare } from 'lucide-react';
 
 interface LogoProps {
-  variant?: 'light' | 'dark';
+  variant?: 'light' | 'dark' | 'auto';
   size?: 'sm' | 'md' | 'lg';
   showIcon?: boolean;
   href?: string;
 }
 
 export default function Logo({ 
-  variant = 'light', 
+  variant = 'auto', 
   size = 'md', 
   showIcon = true,
   href = '/'
@@ -22,17 +22,23 @@ export default function Logo({
   };
 
   const config = sizeClasses[size];
-  const textColor = variant === 'dark' ? 'text-white' : 'text-black';
+  
+  // Use semantic tokens for auto variant, hardcoded for explicit light/dark
+  const textColorClass = variant === 'auto' 
+    ? 'text-text-primary' 
+    : variant === 'dark' 
+      ? 'text-white' 
+      : 'text-black';
 
   const LogoContent = () => (
     <>
       {showIcon && (
-        <div className={`bg-red-600 text-white ${config.iconPadding} rounded-lg`}>
+        <div className={`bg-brand text-brand-foreground ${config.iconPadding} rounded-lg`}>
           <MessageSquare size={config.icon} strokeWidth={2.5} />
         </div>
       )}
-      <span className={`${config.text} font-black tracking-tight ${textColor}`}>
-        anon<span className="text-red-600">msg</span>
+      <span className={`${config.text} font-black tracking-tight ${textColorClass}`}>
+        anon<span className="text-brand">msg</span>
       </span>
     </>
   );

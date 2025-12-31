@@ -18,13 +18,13 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans selection:bg-red-600 selection:text-white py-12 px-4">
+    <div className="min-h-screen bg-surface-muted font-sans transition-colors py-12 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12 space-y-4">
-          <h1 className="text-4xl font-black tracking-tighter text-zinc-900">
-            Get in <span className="text-red-600">Touch</span>
+          <h1 className="text-4xl font-black tracking-tighter text-text-primary">
+            Get in <span className="text-brand">Touch</span>
           </h1>
-          <p className="text-zinc-500 max-w-2xl mx-auto">
+          <p className="text-text-muted max-w-2xl mx-auto">
             Have a question, suggestion, or just want to say hi? We'd love to hear from you.
           </p>
         </div>
@@ -32,45 +32,45 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Info */}
           <div className="space-y-6">
-            <Card className="border-zinc-200 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6 flex items-start gap-4">
-                <div className="bg-red-50 p-3 rounded-lg text-red-600">
+                <div className="bg-brand/10 p-3 rounded-lg text-brand">
                   <Mail size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-zinc-900">Email Us</h3>
-                  <p className="text-zinc-500 text-sm mb-1">For general inquiries and support</p>
-                  <a href="mailto:support@anonmsg.com" className="text-red-600 font-medium hover:underline">
+                  <h3 className="font-bold text-text-primary">Email Us</h3>
+                  <p className="text-text-muted text-sm mb-1">For general inquiries and support</p>
+                  <a href="mailto:support@anonmsg.com" className="text-brand font-medium hover:underline">
                     support@anonmsg.com
                   </a>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-zinc-200 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6 flex items-start gap-4">
-                <div className="bg-red-50 p-3 rounded-lg text-red-600">
+                <div className="bg-brand/10 p-3 rounded-lg text-brand">
                   <Phone size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-zinc-900">Call Us</h3>
-                  <p className="text-zinc-500 text-sm mb-1">Mon-Fri from 9am to 5pm</p>
-                  <a href="tel:+1234567890" className="text-red-600 font-medium hover:underline">
+                  <h3 className="font-bold text-text-primary">Call Us</h3>
+                  <p className="text-text-muted text-sm mb-1">Mon-Fri from 9am to 5pm</p>
+                  <a href="tel:+1234567890" className="text-brand font-medium hover:underline">
                     +1 (555) 000-0000
                   </a>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-zinc-200 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6 flex items-start gap-4">
-                <div className="bg-red-50 p-3 rounded-lg text-red-600">
+                <div className="bg-brand/10 p-3 rounded-lg text-brand">
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-zinc-900">Visit Us</h3>
-                  <p className="text-zinc-500 text-sm mb-1">Our HQ</p>
-                  <p className="text-zinc-900 font-medium">
+                  <h3 className="font-bold text-text-primary">Visit Us</h3>
+                  <p className="text-text-muted text-sm mb-1">Our HQ</p>
+                  <p className="text-text-primary font-medium">
                     123 Innovation Drive<br />
                     Tech City, TC 90210
                   </p>
@@ -79,9 +79,9 @@ export default function ContactPage() {
             </Card>
 
             {/* Social Links */}
-            <Card className="border-zinc-200 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-bold text-zinc-900 mb-4">Connect With Us</h3>
+                <h3 className="font-bold text-text-primary mb-4">Connect With Us</h3>
                 <div className="flex gap-4">
                   <a 
                     href="https://github.com/ritiksharmaaa" 
@@ -111,7 +111,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <Card className="border-zinc-200 shadow-sm h-fit">
+          <Card className="border-border shadow-sm h-fit">
             <CardHeader>
               <CardTitle>Send us a message</CardTitle>
               <CardDescription>
@@ -147,7 +147,7 @@ export default function ContactPage() {
                     required 
                   />
                 </div>
-                <Button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold">
+                <Button type="submit" className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold">
                   Send Message
                 </Button>
               </form>

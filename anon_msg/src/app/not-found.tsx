@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-50 px-4 text-center font-sans selection:bg-red-600 selection:text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-surface-muted px-4 text-center font-sans transition-colors">
       
       {/* Custom SVG Animation Container */}
       <div className="relative mb-8 h-64 w-64 md:h-80 md:w-80">
@@ -62,22 +62,22 @@ export default function NotFound() {
         <div className="absolute -bottom-4 left-1/2 h-4 w-32 -translate-x-1/2 rounded-[100%] bg-black/10 blur-md" />
       </div>
 
-      <h1 className="mb-2 text-4xl font-black tracking-tighter text-zinc-900 md:text-6xl">
+      <h1 className="mb-2 text-4xl font-black tracking-tighter text-text-primary md:text-6xl">
         Page Not Found
       </h1>
       
-      <p className="mb-8 max-w-md text-lg text-zinc-500">
+      <p className="mb-8 max-w-md text-lg text-text-muted">
         Oops! The page you are looking for has vanished into the void or never existed.
       </p>
 
       <div className="flex gap-4">
         <Link href="/">
-          <Button size="lg" className="bg-red-600 font-bold text-white hover:bg-red-700">
+          <Button size="lg" className="bg-brand font-bold text-brand-foreground hover:bg-brand-hover">
             Return Home
           </Button>
         </Link>
         <Link href="/u/suggest-anon-channel">
-          <Button variant="outline" size="lg" className="border-zinc-300 font-bold text-zinc-700 hover:bg-zinc-100">
+          <Button variant="outline" size="lg" className="border-border font-bold text-text-secondary hover:bg-surface-muted">
             Browse Users
           </Button>
         </Link>
