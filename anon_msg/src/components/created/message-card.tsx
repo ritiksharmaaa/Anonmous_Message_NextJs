@@ -23,8 +23,9 @@ const MessageCard: React.FC<MessageCardProps> = ({ message, onDelete }) => {
     setIsDeleting(true);
     try {
       // Call the delete API or function
-      const res = await axios.get(`/api/delete-message?messageId=${message._id}`);
-
+       const res = await axios.delete('/api/delete-message', {
+      data: { messageId: message._id },
+    });
       toast.success( res.data.message  ||'Message deleted successfully');
       onDelete(message._id); //thisis not send any response so we just wait not hold return repsonse because it is void returen type 
     } catch (error) {

@@ -27,7 +27,7 @@ export default function AboutPage() {
             </div>
             <h3 className="text-xl font-bold text-text-primary">Privacy First</h3>
             <p className="text-text-secondary">
-              We don't track your IP, we don't sell your data. Your anonymity is our top priority.
+              We don&apos;t track your IP, we don&apos;t sell your data. Your anonymity is our top priority.
             </p>
           </div>
           <div className="bg-surface p-8 rounded-2xl shadow-sm border border-border-muted text-center space-y-4">
