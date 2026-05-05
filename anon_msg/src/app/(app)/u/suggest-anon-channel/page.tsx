@@ -1,55 +1,61 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { ApiResponse } from "@/types/ApiResponse";
 
-
-
-// Mock data for suggested channels
-const suggestedChannels = [
-    {
-        id: 1,
-        username: "mystery_user",
-        displayName: "Mystery User",
-        lastMessage: "Hey! Send me an anonymous message.",
-        timestamp: "10:30 AM",
-        avatar: "https://github.com/shadcn.png",
-        unread: 2,
-    },
-    {
-        id: 2,
-        username: "secret_confessions",
-        displayName: "Secret Confessions",
-        lastMessage: "I have a secret to tell...",
-        timestamp: "Yesterday",
-        avatar: "",
-        unread: 0,
-    },
-    {
-        id: 3,
-        username: "anon_feedback",
-        displayName: "Anon Feedback",
-        lastMessage: "Waiting for your honest opinion.",
-        timestamp: "Yesterday",
-        avatar: "",
-        unread: 5,
-    },
-    {
-        id: 4,
-        username: "night_owl",
-        displayName: "Night Owl",
-        lastMessage: "Who is up right now?",
-        timestamp: "2 days ago",
-        avatar: "",
-        unread: 0,
-    },
-];
+type Channel = {
+    username: string;
+    displayName: string;
+    lastMessage: string;
+    timestamp: string;
+    avatar: string;
+    unread: number;
+};
 
 export default function SuggestAnonChannelPage() {
+    const [channels, setChannels] = useState<Channel[]>([]);
+    const [query, setQuery] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        let isCancelled = false;
+
+        const fetchChannels = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await axios.get<ApiResponse>("/api/discover-channels", {
+                    params: { q: query || undefined },
+                });
+                const data = response.data.data as { channels?: Channel[] } | undefined;
+                if (!isCancelled) {
+                    setChannels(data?.channels || []);
+                }
+            } catch (err) {
+                const axiosError = err as AxiosError<ApiResponse>;
+                if (!isCancelled) {
+                    setError(axiosError.response?.data.message || "Failed to load channels");
+                }
+            } finally {
+                if (!isCancelled) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchChannels();
+        return () => {
+            isCancelled = true;
+        };
+    }, [query]);
+
     return (
         <div className="min-h-screen bg-surface-muted py-12 px-4 font-sans transition-colors">
             <div className="container mx-auto max-w-4xl">
@@ -67,47 +73,57 @@ export default function SuggestAnonChannelPage() {
                             <Input
                                 placeholder="Search for users..."
                                 className="pl-10 h-12 bg-surface-muted border-border text-text-primary placeholder:text-text-muted focus-visible:ring-focus-ring focus-visible:border-brand rounded-xl transition-all"
+                                value={query}
+                                onChange={(event) => setQuery(event.target.value)}
                             />
                         </div>
                     </CardHeader>
                     <CardContent className="p-0">
                         <ScrollArea className="h-[600px]">
                             <div className="flex flex-col divide-y divide-border-muted">
-                                {suggestedChannels.map((channel) => (
-                                    <Link
-                                        key={channel.id}
-                                        href={`/u/${channel.username}`}
-                                        className="group flex items-center gap-4 p-6 transition-all hover:bg-surface-muted cursor-pointer"
-                                    >
-                                        <Avatar className="h-14 w-14 border-2 border-surface shadow-sm group-hover:border-brand/20 transition-colors">
-                                            <AvatarImage src={channel.avatar} alt={channel.username} />
-                                            <AvatarFallback className="bg-brand/10 text-brand font-bold text-lg">
-                                                {channel.displayName.substring(0, 2).toUpperCase()}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        
-                                        <div className="flex flex-1 flex-col justify-center overflow-hidden">
-                                            <div className="flex items-center justify-between mb-1">
-                                                <span className="font-bold text-lg text-text-primary truncate group-hover:text-brand transition-colors">
-                                                    {channel.displayName}
-                                                </span>
-                                                <span className="text-xs font-medium text-text-muted whitespace-nowrap ml-2">
-                                                    {channel.timestamp}
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-sm text-text-muted truncate pr-4 group-hover:text-text-secondary">
-                                                    {channel.lastMessage}
-                                                </span>
-                                                {channel.unread > 0 && (
-                                                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-foreground shadow-sm">
-                                                        {channel.unread}
+                                {loading ? (
+                                    <div className="p-6 text-text-muted">Loading channels...</div>
+                                ) : error ? (
+                                    <div className="p-6 text-status-error">{error}</div>
+                                ) : channels.length === 0 ? (
+                                    <div className="p-6 text-text-muted">No channels found.</div>
+                                ) : (
+                                    channels.map((channel) => (
+                                        <Link
+                                            key={channel.username}
+                                            href={`/u/${channel.username}`}
+                                            className="group flex items-center gap-4 p-6 transition-all hover:bg-surface-muted cursor-pointer"
+                                        >
+                                            <Avatar className="h-14 w-14 border-2 border-surface shadow-sm group-hover:border-brand/20 transition-colors">
+                                                <AvatarImage src={channel.avatar} alt={channel.username} />
+                                                <AvatarFallback className="bg-brand/10 text-brand font-bold text-lg">
+                                                    {channel.displayName.substring(0, 2).toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            
+                                            <div className="flex flex-1 flex-col justify-center overflow-hidden">
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <span className="font-bold text-lg text-text-primary truncate group-hover:text-brand transition-colors">
+                                                        {channel.displayName}
                                                     </span>
-                                                )}
+                                                    <span className="text-xs font-medium text-text-muted whitespace-nowrap ml-2">
+                                                        {channel.timestamp}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-sm text-text-muted truncate pr-4 group-hover:text-text-secondary">
+                                                        {channel.lastMessage}
+                                                    </span>
+                                                    {channel.unread > 0 && (
+                                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-foreground shadow-sm">
+                                                            {channel.unread}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                ))}
+                                        </Link>
+                                    ))
+                                )}
                             </div>
                         </ScrollArea>
                     </CardContent>

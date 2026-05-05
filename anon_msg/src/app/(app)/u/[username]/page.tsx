@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -26,7 +26,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 import Link from "next/link";
 
 // Dummy data for suggestions
-const DUMMY_SUGGESTIONS = [
+const DEFAULT_SUGGESTIONS = [
   "What's a hobby you've always wanted to pick up but never did?",
   "If you could have dinner with any historical figure, who would it be?",
   "What's a simple thing that makes you happy?",
@@ -40,7 +40,7 @@ export default function SendMessagePage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuggestLoading, setIsSuggestLoading] = useState(false);
-  const [suggestedMessages, setSuggestedMessages] = useState<string[]>(DUMMY_SUGGESTIONS.slice(0, 3));
+  const [suggestedMessages, setSuggestedMessages] = useState<string[]>(DEFAULT_SUGGESTIONS.slice(0, 3));
   const [isAcceptingMessages, setIsAcceptingMessages] = useState(false);
   const [isCheckingAcceptance, setIsCheckingAcceptance] = useState(false);
   const [hasChecked, setHasChecked] = useState(false);
@@ -84,16 +84,23 @@ export default function SendMessagePage() {
   const fetchSuggestedMessages = async () => {
     setIsSuggestLoading(true);
     try {
-      // Simulate API delay or fetch from actual API if needed
-      // const response = await axios.post('/api/suggest-messages');
-      // setSuggestedMessages(parseStringMessages(response.data.message));
-      
-      // Using dummy data as requested
-      // Shuffle or rotate dummy data
-      const shuffled = [...DUMMY_SUGGESTIONS].sort(() => 0.5 - Math.random());
+      const response = await axios.post<ApiResponse>("/api/suggest-messages");
+      const suggestions = (response.data.data as { suggestions?: string[] } | undefined)
+        ?.suggestions
+        ?.filter(Boolean)
+        ?.slice(0, 3);
+
+      if (suggestions && suggestions.length > 0) {
+        setSuggestedMessages(suggestions);
+        toast.success("New suggestions loaded!");
+      } else {
+        const shuffled = [...DEFAULT_SUGGESTIONS].sort(() => 0.5 - Math.random());
+        setSuggestedMessages(shuffled.slice(0, 3));
+        toast.message("Using default suggestions");
+      }
+    } catch {
+      const shuffled = [...DEFAULT_SUGGESTIONS].sort(() => 0.5 - Math.random());
       setSuggestedMessages(shuffled.slice(0, 3));
-      toast.success("New suggestions loaded!");
-    } catch (error) {
       toast.error("Failed to fetch suggestions");
     } finally {
       setIsSuggestLoading(false);

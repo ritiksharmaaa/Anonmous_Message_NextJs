@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="space-y-4">
             <Logo size="md" variant="dark" />
             <p className="text-zinc-400 dark:text-text-muted text-sm leading-relaxed">
-              Privacy isn't a feature, it's the foundation.
+              Privacy isn&apos;t a feature, it&apos;s the foundation.
             </p>
           </div>
           

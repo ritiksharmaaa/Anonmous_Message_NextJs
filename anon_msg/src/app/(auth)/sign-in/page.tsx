@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { Lock, User, ArrowRight, MessageSquare } from "lucide-react";
+import { Lock, User, ArrowRight } from "lucide-react";
 import Logo from "@/components/created/logo";
 
 type SignInFormValues = z.infer<typeof signInSchema>;
@@ -217,7 +217,7 @@ export default function SignInPage() {
           </div>
 
           <p className="text-center text-sm text-text-muted mt-8">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-brand hover:text-brand-hover font-bold hover:underline">
               Create account
             </Link>

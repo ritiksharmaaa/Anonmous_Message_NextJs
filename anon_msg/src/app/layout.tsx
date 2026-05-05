@@ -4,7 +4,6 @@ import "./globals.css";// not require if you move this to (app) we do access in 
 import AuthProvider from "@/context/authProvider";
 import { ThemeProvider, themeInitScript } from "@/context/themeProvider";
 import { Toaster } from "@/components/ui/sonner"
-import Navbar from "@/components/created/navbar";
 
 
 const geistSans = Geist({

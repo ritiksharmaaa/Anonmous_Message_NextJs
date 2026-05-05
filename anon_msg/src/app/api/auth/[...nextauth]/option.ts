@@ -6,39 +6,62 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User.model';
 
+const normalizeUsername = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9_]/g, '')
+    .replace(/_+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .slice(0, 24);
+
+const buildUniqueUsername = async (base: string) => {
+  let candidate = normalizeUsername(base) || `user${Date.now().toString().slice(-6)}`;
+  let exists = await UserModel.findOne({ username: candidate }).lean();
+  while (exists) {
+    const suffix = Math.floor(1000 + Math.random() * 9000).toString();
+    candidate = `${candidate.slice(0, 20)}${suffix}`;
+    exists = await UserModel.findOne({ username: candidate }).lean();
+  }
+  return candidate;
+};
+
 export const authOptions: NextAuthOptions = {
   providers: [
-    // Google Provider
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    // GitHub Provider
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
-    // Credentials Provider 
     CredentialsProvider({
-        id: 'credentials',
+      id: 'credentials',
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'text' },
+        identifier: { label: 'Email or Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials): Promise<any> {
         await dbConnect();
+        if (!credentials) {
+          return null;
+        }
         try {
+          const { identifier, password } = credentials as {
+            identifier: string;
+            password: string;
+          };
+
           const user = await UserModel.findOne({
-            // here we allow login with either email or username
             $or: [
-              { email: credentials.identifier },
-              { username: credentials.identifier },
+              { email: identifier },
+              { username: identifier },
             ],
           });
 
           if (!user) {
-            throw new Error('No user found with this email');
+            return null;
           }
 
           if (!user.isVerified) {
@@ -46,28 +69,75 @@ export const authOptions: NextAuthOptions = {
           }
 
           const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
+            password,
             user.password
           );
 
           if (isPasswordCorrect) {
             return user;
           } else {
-            throw new Error('Incorrect password');
+            return null;
           }
-        } catch (err: any) {
-          throw new Error(err);
+        } catch (err) {
+          return null;
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === 'github' || account?.provider === 'google') {
+        await dbConnect();
+        try {
+          const existingUser = await UserModel.findOne({ email: user.email });
+          if (existingUser) {
+            return true;
+          }
+          const emailPrefix = user.email?.split('@')[0] ?? `user${Date.now().toString().slice(-6)}`;
+          const username = await buildUniqueUsername(emailPrefix);
+          const newUser = new UserModel({
+            username,
+            email: user.email,
+            isVerified: true,
+            isAcceptingMessages: true,
+          });
+          await newUser.save();
+          return true;
+        } catch (error) {
+          console.error("Error saving OAuth user:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, account }) {
       if (user) {
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.username = user.username;
+      }
+
+      if (account?.provider === "github" || account?.provider === "google") {
+        await dbConnect();
+        const dbUser = await UserModel.findOne({ email: token.email });
+        if (dbUser) {
+          token._id = dbUser._id?.toString();
+          token.isVerified = dbUser.isVerified;
+          token.isAcceptingMessages = dbUser.isAcceptingMessages;
+          token.username = dbUser.username;
+        }
+      }
+
+      if (!token._id && token.email) {
+        await dbConnect();
+        const dbUser = await UserModel.findOne({ email: token.email });
+        if (dbUser) {
+          token._id = dbUser._id?.toString();
+          token.isVerified = dbUser.isVerified;
+          token.isAcceptingMessages = dbUser.isAcceptingMessages;
+          token.username = dbUser.username;
+        }
       }
       return token;
     },
@@ -85,7 +155,7 @@ export const authOptions: NextAuthOptions = {
     signIn: '/sign-in',
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt"
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

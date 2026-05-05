@@ -47,8 +47,7 @@ const Page = () => {
       // Based on previous context of is-accepting-messages route
       const isAccepting = res.data?.isAcceptingMessages ?? false;
       setValue('acceptMessages', isAccepting);
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
+    } catch {
       // toast.error(
       //   axiosError.response?.data.message ||
       //     'Error fetching accept messages setting'
@@ -111,7 +110,8 @@ const Page = () => {
     return <div className="flex justify-center items-center min-h-screen bg-background text-text-primary transition-colors">Please log in to view your dashboard.</div>;
   }
 
-  const username = (session.user as User & { username?: string }).username || (session.user as any).name || '';
+  const sessionUser = session.user as User & { username?: string };
+  const username = sessionUser.username || sessionUser.name || '';
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const profileUrl = `${origin}/u/${username}`;
 
@@ -123,7 +123,8 @@ const Page = () => {
       } else {
         toast.error('Clipboard API not available');
       }
-    } catch (err) {
+    } catch (error) {
+      console.error('Failed to copy profile URL', error);
       toast.error('Failed to copy profile URL');
     }
   };

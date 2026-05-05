@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, Check, X, User, Mail, Lock, ArrowRight, MessageSquare, Shield, Zap, Eye } from "lucide-react";
+import { Loader2, Check, X, User, Mail, Lock, ArrowRight, Shield, Zap, Eye } from "lucide-react";
 import Logo from "@/components/created/logo";
 
 export default function SignUpPage() {
@@ -205,10 +205,10 @@ export default function SignUpPage() {
                           {isCheckingUsername && (
                             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-text-muted" />
                           )}
-                          {!isCheckingUsername && userMessage === "Username is unique" && (
+                          {!isCheckingUsername && userMessage === "Username is available" && (
                             <Check className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-success" />
                           )}
-                          {!isCheckingUsername && userMessage && userMessage !== "Username is unique" && (
+                          {!isCheckingUsername && userMessage && userMessage !== "Username is available" && (
                             <X className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-danger" />
                           )}
                         </div>
@@ -216,7 +216,7 @@ export default function SignUpPage() {
                       {userMessage && (
                         <p
                           className={`text-xs font-medium mt-1.5 ${
-                            userMessage === "Username is unique"
+                            userMessage === "Username is available"
                               ? "text-success"
                               : "text-danger"
                           }`}

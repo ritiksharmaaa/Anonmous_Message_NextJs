@@ -10,6 +10,11 @@ interface Message {
   time: string;
 }
 
+const additionalMessages: Message[] = [
+  { id: 3, text: "That's actually amazing 🔥", isOwn: false, time: "2:43 PM" },
+  { id: 4, text: "Right? Share your link and see what people really think!", isOwn: true, time: "2:44 PM" },
+];
+
 export default function PhoneMockup() {
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: "Hey, is this really anonymous? 🤔", isOwn: false, time: "2:41 PM" },
@@ -17,11 +22,6 @@ export default function PhoneMockup() {
   ]);
   const [showTyping, setShowTyping] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-
-  const additionalMessages: Message[] = [
-    { id: 3, text: "That's actually amazing 🔥", isOwn: false, time: "2:43 PM" },
-    { id: 4, text: "Right? Share your link and see what people really think!", isOwn: true, time: "2:44 PM" },
-  ];
 
   useEffect(() => {
     if (currentMessageIndex >= additionalMessages.length) return;

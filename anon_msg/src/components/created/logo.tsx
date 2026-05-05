@@ -1,6 +1,30 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { MessageSquare } from 'lucide-react';
+
+type LogoContentProps = {
+  showIcon: boolean;
+  config: {
+    icon: number;
+    iconPadding: string;
+    text: string;
+    logoWidth: number;
+    logoHeight: number;
+  };
+  textColorClass: string;
+};
+
+const LogoContent = ({ showIcon, config, textColorClass }: LogoContentProps) => (
+  <>
+    {showIcon && (
+      <div className={`bg-brand text-brand-foreground ${config.iconPadding} rounded-lg`}>
+        <MessageSquare size={config.icon} strokeWidth={2.5} />
+      </div>
+    )}
+    <span className={`${config.text} font-black tracking-tight ${textColorClass}`}>
+      anon<span className="text-brand">msg</span>
+    </span>
+  </>
+);
 
 interface LogoProps {
   variant?: 'light' | 'dark' | 'auto';
@@ -30,30 +54,17 @@ export default function Logo({
       ? 'text-white' 
       : 'text-black';
 
-  const LogoContent = () => (
-    <>
-      {showIcon && (
-        <div className={`bg-brand text-brand-foreground ${config.iconPadding} rounded-lg`}>
-          <MessageSquare size={config.icon} strokeWidth={2.5} />
-        </div>
-      )}
-      <span className={`${config.text} font-black tracking-tight ${textColorClass}`}>
-        anon<span className="text-brand">msg</span>
-      </span>
-    </>
-  );
-
   if (href) {
     return (
       <Link href={href} className="flex items-center gap-2 select-none">
-        <LogoContent />
+        <LogoContent showIcon={showIcon} config={config} textColorClass={textColorClass} />
       </Link>
     );
   }
 
   return (
     <div className="flex items-center gap-2 select-none">
-      <LogoContent />
+      <LogoContent showIcon={showIcon} config={config} textColorClass={textColorClass} />
     </div>
   );
 }

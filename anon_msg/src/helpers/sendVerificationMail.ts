@@ -8,15 +8,28 @@ export async function sendVerificationEmail(
     verifyCode: string
 ): Promise<ApiResponse> {
     try {
-        await resend.emails.send({
-            from: 'onboarding@resend.dev',
+        const fromEmail = process.env.RESEND_FROM;
+        if (!fromEmail) {
+            throw new Error("RESEND_FROM is not set in the environment.");
+        }
+
+        const { data, error } = await resend.emails.send({
+            from: fromEmail,
             to: email,
             subject: 'Anonymous Message | Verification Code',
             react: VerificationEmail({ username, otp: verifyCode }),
         });
+
+        if (error) {
+            // console.error("Resend API error", error);
+            return { success: false, message: `Failed to send verification email: ${error.message || "Unknown error"}` };
+        }
+
+        // console.log("Resend API response", data);
         return { success: true, message: 'Verification email sent successfully.' };
     } catch (emailError) {
+        const errorMessage = emailError instanceof Error ? emailError.message : "Unknown error";
         console.error("Error sending verification email", emailError);
-        return { success: false, message: 'Failed to send verification email.' };
+        return { success: false, message: `Failed to send verification email: ${errorMessage}` };
     }
 }

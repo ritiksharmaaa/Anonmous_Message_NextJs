@@ -30,45 +30,69 @@ export async function POST(request: Request) {
     try {
         const { username, email, password } = await request.json();
 
-        const existingUser = await UserModel.findOne({ email });
-        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const emailUser = await UserModel.findOne({ email });
+        const usernameUser = await UserModel.findOne({ username });
 
-        if (existingUser) {
-            if (existingUser.isVerified) {
+        if (emailUser?.isVerified) {
+            return Response.json(
+                {
+                    success: false,
+                    message: "User already exists with this email",
+                },
+                { status: 400 }
+            );
+        }
+
+        if (usernameUser?.isVerified) {
+            return Response.json(
+                {
+                    success: false,
+                    message: "Username already taken",
+                },
+                { status: 409 }
+            );
+        }
+
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const verifyCodeExpire = new Date(Date.now() + 3600000);
+
+        let userToUpdate = null;
+
+        if (usernameUser && !usernameUser.isVerified) {
+            if (emailUser && emailUser._id.toString() !== usernameUser._id.toString()) {
                 return Response.json(
                     {
                         success: false,
-                        message: "User already exists with this email",
+                        message:
+                            "Email and username belong to different unverified accounts. Try another.",
                     },
-                    { status: 400 }
+                    { status: 409 }
                 );
-            } else {
-                // If user exists but is not verified, update their password and verification code
-                const hashedPassword = await bcrypt.hash(password, 10);
-                existingUser.password = hashedPassword;
-                existingUser.username = username;
-                existingUser.verifyCode = verifyCode;
-                existingUser.verifyCodeExpire = new Date(Date.now() + 3600000); // 1 hour
-                await existingUser.save();
             }
-        } else {
-            // Create a new user since one doesn't exist with this email
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const expiryDate = new Date();
-            expiryDate.setHours(expiryDate.getHours() + 1);
+            userToUpdate = usernameUser;
+        } else if (emailUser && !emailUser.isVerified) {
+            userToUpdate = emailUser;
+        }
 
-            const newUser = new UserModel({
+        if (userToUpdate) {
+            userToUpdate.username = username;
+            userToUpdate.email = email;
+            userToUpdate.password = hashedPassword;
+            userToUpdate.verifyCode = verifyCode;
+            userToUpdate.verifyCodeExpire = verifyCodeExpire;
+            await userToUpdate.save();
+        } else {
+            await UserModel.create({
                 username,
                 email,
                 password: hashedPassword,
                 verifyCode,
-                verifyCodeExpire: expiryDate,
+                verifyCodeExpire,
                 isVerified: false,
                 isAcceptingMessages: true,
                 messages: [],
             });
-
-            await newUser.save();
         }
 
         // Send verification email in both cases (new user or existing unverified user)
@@ -96,6 +120,16 @@ export async function POST(request: Request) {
             { status: 201 }
         );
     } catch (error) {
+        const mongoError = error as { code?: number };
+        if (mongoError.code === 11000) {
+            return Response.json(
+                {
+                    success: false,
+                    message: "Username already taken",
+                },
+                { status: 409 }
+            );
+        }
         console.error('Error registering user', error);
         return Response.json(
             {

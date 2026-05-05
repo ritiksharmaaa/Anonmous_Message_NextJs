@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,13 +9,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { toast } from 'sonner';
+import { ApiResponse } from '@/types/ApiResponse';
 
 export default function ContactPage() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.success("Message sent!", {
-      description: "We'll get back to you as soon as possible.",
-    });
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: String(formData.get('firstName') || ''),
+      lastName: String(formData.get('lastName') || ''),
+      email: String(formData.get('email') || ''),
+      subject: String(formData.get('subject') || ''),
+      message: String(formData.get('message') || ''),
+    };
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post<ApiResponse>('/api/contact', payload);
+      if (response.data.success) {
+        toast.success('Message sent!', {
+          description: "We'll get back to you as soon as possible.",
+        });
+        form.reset();
+      } else {
+        toast.error(response.data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>;
+      toast.error(axiosError.response?.data.message || 'Failed to send message');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -25,7 +54,7 @@ export default function ContactPage() {
             Get in <span className="text-brand">Touch</span>
           </h1>
           <p className="text-text-muted max-w-2xl mx-auto">
-            Have a question, suggestion, or just want to say hi? We'd love to hear from you.
+            Have a question, suggestion, or just want to say hi? We&apos;d love to hear from you.
           </p>
         </div>
 
@@ -115,7 +144,7 @@ export default function ContactPage() {
             <CardHeader>
               <CardTitle>Send us a message</CardTitle>
               <CardDescription>
-                Fill out the form below and we'll get back to you shortly.
+                Fill out the form below and we&apos;ll get back to you shortly.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -123,32 +152,37 @@ export default function ContactPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="first-name">First name</Label>
-                    <Input id="first-name" placeholder="John" required />
+                    <Input id="first-name" name="firstName" placeholder="John" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="last-name">Last name</Label>
-                    <Input id="last-name" placeholder="Doe" required />
+                    <Input id="last-name" name="lastName" placeholder="Doe" required />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" required />
+                  <Input id="email" name="email" type="email" placeholder="john@example.com" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="How can we help?" required />
+                  <Input id="subject" name="subject" placeholder="How can we help?" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
                   <Textarea 
                     id="message" 
+                    name="message"
                     placeholder="Tell us more about your inquiry..." 
                     className="min-h-[120px]"
                     required 
                   />
                 </div>
-                <Button type="submit" className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold">
-                  Send Message
+                <Button
+                  type="submit"
+                  className="w-full bg-brand hover:bg-brand-hover text-brand-foreground font-bold"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>

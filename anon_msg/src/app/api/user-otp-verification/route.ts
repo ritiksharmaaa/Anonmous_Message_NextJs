@@ -19,7 +19,8 @@ import { z } from "zod";
 import { ApiResponse } from "@/types/ApiResponse";
 
 const requestSchema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
+    username: z.string().min(1).optional(),
+    email: z.string().email({ message: "Invalid email address" }).optional(),
     code: verifySchema.shape.code,
 });
 
@@ -29,8 +30,9 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
         const decodedBody = {
-            email: decodeURIComponent(body.email),
-            code: decodeURIComponent(body.code),
+            username: typeof body.username === "string" ? decodeURIComponent(body.username) : undefined,
+            email: typeof body.email === "string" ? decodeURIComponent(body.email) : undefined,
+            code: typeof body.code === "string" ? decodeURIComponent(body.code) : body.code,
         };
         // attention whenever get the uri data we neeed to pass to decodeURIComponent becuase we have to somtimes handel it manually so we can  get the structure data not the url encoded data 
 
@@ -43,12 +45,19 @@ export async function POST(request: Request) {
             );
         }
 
-        const { email, code } = parsed.data;
+        const { email, username, code } = parsed.data;
 
-        const user = await UserModel.findOne({ email });
+        if (!email && !username) {
+            return Response.json(
+                { success: false, message: "Username or email is required" } as ApiResponse,
+                { status: 400 }
+            );
+        }
+
+        const user = await UserModel.findOne(username ? { username } : { email });
         if (!user) {
             return Response.json(
-                { success: false, message: "No user found with this email" } as ApiResponse,
+                { success: false, message: "No user found" } as ApiResponse,
                 { status: 400 }
             );
         }
@@ -78,9 +87,6 @@ export async function POST(request: Request) {
 
         // All good -> verify user
         user.isVerified = true;
-        // Optional: clear verifyCode and expiry
-        user.verifyCode = "";
-        user.verifyCodeExpire = new Date();
         await user.save();
 
         return Response.json(

@@ -1,22 +1,81 @@
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
-import { openai } from "@ai-sdk/openai";
+import { OpenRouter } from '@openrouter/sdk';
+import { ApiResponse } from '@/types/ApiResponse';
 
-export async function POST(req: Request) {
+const openrouter = new OpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
+
+const fallbackSuggestions = [
+  "What's a hobby you've always wanted to pick up but never did?",
+  "If you could have dinner with any historical figure, who would it be?",
+  "What's a simple thing that makes you happy?",
+];
+
+const openRouterModel = "openrouter/free";
+
+export async function POST() {
   try {
-    const prompt = "create a liost of three open-ended and engagin question formattd as a single string. Each question houl be separated by '||'. These questions are for an amonmymous social messaging platform , like Qooh.me, and should be suitable for a diverse audience. Avoid personla or senstive topics, forcusing instead on universal themes that encourage friendly interaction . For example, your outpur should be structurred like this: 'What is a hobby you've and historical figure, who wuld it be?|| what's a simple thing that makes you happy?. Ensure the questions are intriguing foster curiosity, and ontribure to a positive and welcoming conversational environment."
-    const { messages }: { messages: UIMessage[] } = await req.json();
-    
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.warn("OPENROUTER_API_KEY is missing. Returning fallback suggestions.");
+      return Response.json(
+        {
+          success: false,
+          message: "OPENROUTER_API_KEY is missing",
+          data: { suggestions: fallbackSuggestions },
+        } as ApiResponse,
+        { status: 200 }
+      );
+    }
 
-  const result = streamText({
-    model: openai("gpt-4.1"),
-    messages: convertToModelMessages(messages,),
-    system : prompt
-  });
+    const prompt = "Create a list of three open-ended, engaging questions formatted as a single string. Separate each question with '||'. These questions are for an anonymous social messaging platform and should be suitable for a diverse audience. Avoid personal or sensitive topics and focus on universal, friendly themes.";
 
-  return result.toUIMessageStreamResponse();
+    const stream = await openrouter.chat.send({
+      model: openRouterModel,
+      messages: [{ role: "user", content: prompt }],
+      stream: true,
+    });
+
+    let responseText = "";
+
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content;
+
+      if (typeof content === "string") {
+        responseText += content;
+      }
+
+      if (chunk.usage) {
+        const usage = chunk.usage as { reasoningTokens?: number };
+        console.log("Reasoning tokens:", usage.reasoningTokens);
+      }
+    }
+
+    const suggestions = responseText
+      .split("||")
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .slice(0, 3);
+
+    if (suggestions.length === 0) {
+      console.warn(`${openRouterModel} returned no usable suggestions. Returning fallback suggestions.`);
+    }
+
+    const payload = {
+      suggestions: suggestions.length > 0 ? suggestions : fallbackSuggestions,
+    };
+
+    return Response.json({ success: true, data: payload } as ApiResponse, {
+      status: 200,
+    });
   } catch (error) {
-    // log the we have get the different type of error     
-    console.error('Error processing request:', error);
-    throw error;
+    console.error("Error processing suggestion request:", error);
+    return Response.json(
+      {
+        success: false,
+        message: "Failed to generate suggestions",
+        data: { suggestions: fallbackSuggestions },
+      } as ApiResponse,
+      { status: 200 }
+    );
   }
 }

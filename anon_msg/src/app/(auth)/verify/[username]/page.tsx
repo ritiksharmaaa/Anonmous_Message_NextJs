@@ -53,6 +53,21 @@ export default function VerifyPage() {
 		}
 	};
 
+	const handleResendOtp = async () => {
+		if (!username) return;
+		try {
+			const res = await axios.post("/api/resend-otp", { username });
+			if (res.data.success) {
+				toast.success(res.data.message || "Verification code resent successfully!");
+			} else {
+				toast.error(res.data.message || "Failed to resend code");
+			}
+		} catch (err) {
+			const axiosError = err as AxiosError<ApiResponse>;
+			toast.error(axiosError.response?.data?.message || "Failed to resend code");
+		}
+	};
+
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-surface-muted px-4 font-sans transition-colors">
 			<div className="w-full max-w-md p-8 bg-surface rounded-2xl shadow-xl border border-border-muted">
@@ -112,8 +127,11 @@ export default function VerifyPage() {
 				
 				<div className="mt-8 text-center">
 					<p className="text-sm text-text-muted">
-						Didn't receive the code?{" "}
-						<button className="text-brand hover:text-brand-hover font-bold hover:underline bg-transparent border-none cursor-pointer">
+						Didn&apos;t receive the code?{" "}
+						<button 
+							onClick={handleResendOtp}
+							className="text-brand hover:text-brand-hover font-bold hover:underline bg-transparent border-none cursor-pointer"
+						>
 							Resend
 						</button>
 					</p>

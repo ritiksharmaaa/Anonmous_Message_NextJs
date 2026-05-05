@@ -1,6 +1,6 @@
 // you can either put middleware vie nextauth or you just make normal middleware for the next js default way 
 
-export { default } from "next-auth/middleware"
+// export { default } from "next-auth/middleware"
 
 import { NextRequest } from 'next/server';
 import { authMiddleware } from './middlewares/authMiddleware';

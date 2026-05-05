@@ -1,39 +1,29 @@
-// here we learn how we are connecting to the database in  nextjs 
-   import { log } from 'console';
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
- type ConnectionObject = {
-    isConnected? : number 
- }
+type ConnectionObject = {
+	isConnected?: number;
+};
 
-const connection: ConnectionObject = {}
+const connection: ConnectionObject = {};
 
-async function dbConnect(): Promise<void> { 
-    if (connection.isConnected) {
-        console.log('already connected')
-        return;
-    }     
+async function dbConnect(): Promise<void> {
+	if (connection.isConnected === 1) {
+		return;
+	}
 
-    try {
-        const db = await mongoose.connect(process.env.MONGODB_URI||""); //you can also pass option there whihch you have to choose it whn you want 
+	const mongoUri = process.env.MONGODB_URI;
+	if (!mongoUri) {
+		throw new Error("MONGODB_URI is not set. Add it to your .env.local");
+	}
 
-        connection.isConnected = db.connections[0].readyState;
-        console.log('DB Connected Successfully');
-        
-        
-        // log the db to explore we get the db.connection[0].readyState
-        connection.isConnected = 1;
-        console.log('connected to database')
-    } catch (error) {
-        console.log("erro" , error );
-        process.exit(1);
-        console.log('DB Connection Failed');
-        
-        
-    }
-    
-    
+	try {
+		const db = await mongoose.connect(mongoUri);
+		connection.isConnected = db.connections[0]?.readyState;
+	} catch (error) {
+		connection.isConnected = 0;
+		console.error("DB connection error", error);
+		throw error;
+	}
 }
-
 
 export default dbConnect;
