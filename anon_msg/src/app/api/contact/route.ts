@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       from: fromEmail,
       to: toEmail,
       subject: `[Contact] ${subject}`,
-      reply_to: email,
+      replyTo: email,
       text: [
         `From: ${firstName} ${lastName}`,
         `Email: ${email}`,
