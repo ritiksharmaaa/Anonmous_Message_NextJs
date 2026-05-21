@@ -85,7 +85,7 @@ src/
 
 ### **1️⃣ ENTRY POINT: Landing Page**
 ```
-User visits localhost:3000
+User visits http://localhost:3000 (dev) or https://project.anonmsg.ritiksharmaaa.in (prod)
     ↓
 src/app/(app)/page.tsx (HOME PAGE)
     ↓
@@ -267,8 +267,8 @@ Click "Get AI Suggestions"
 POST /api/suggest-messages
     ↓
 API Logic:
-  1. Call OpenAI API via AI SDK
-  2. Generate creative anonymous message suggestions
+    1. Call OpenRouter API
+    2. Generate creative anonymous message suggestions
   3. Return array of suggestions
     ↓
 Suggestions displayed in UI
@@ -416,6 +416,9 @@ MONGODB_URI=your_mongodb_connection_string
 NEXTAUTH_SECRET=your_secret_key
 NEXTAUTH_URL=http://localhost:3000
 
+# Production:
+# NEXTAUTH_URL=https://project.anonmsg.ritiksharmaaa.in
+
 GOOGLE_CLIENT_ID=your_google_oauth_id
 GOOGLE_CLIENT_SECRET=your_google_oauth_secret
 
@@ -423,8 +426,12 @@ GITHUB_CLIENT_ID=your_github_oauth_id
 GITHUB_CLIENT_SECRET=your_github_oauth_secret
 
 RESEND_API_KEY=your_resend_email_api_key
+RESEND_FROM=your_verified_sender@yourdomain.com
 
-OPENAI_API_KEY=your_openai_api_key  # For AI suggestions
+CONTACT_TO_EMAIL=your_inbox@yourdomain.com
+CONTACT_FROM_EMAIL=your_verified_sender@yourdomain.com
+
+OPENROUTER_API_KEY=your_openrouter_api_key  # For AI suggestions
 ```
 
 ---
