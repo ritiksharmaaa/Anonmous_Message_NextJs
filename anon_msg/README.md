@@ -1,6 +1,6 @@
 # AnonMsg — Anonymous Messaging Platform
 
-AnonMsg is a full-stack Next.js application that lets users receive anonymous messages through a public profile link.  
+AnonMsg is a full-stack Next.js application that lets users receive anonymous messages through a public profile link.
 It includes authentication, email verification, message management, and AI-powered prompt suggestions.
 
 ## Features
@@ -64,7 +64,7 @@ src/
 
 ## Environment Variables
 
-Create a `.env.local` file in `/home/runner/work/Anonmous_Message_NextJs/Anonmous_Message_NextJs/anon_msg`:
+Create a `.env.local` file in `anon_msg`:
 
 ```env
 MONGODB_URI=
@@ -88,6 +88,8 @@ OPENROUTER_API_KEY=
 ## Getting Started
 
 ```bash
+git clone https://github.com/ritiksharmaaa/Anonmous_Message_NextJs.git
+cd Anonmous_Message_NextJs/anon_msg
 npm install
 npm run dev
 ```
@@ -106,6 +108,19 @@ Open http://localhost:3000 in your browser.
 - Unauthenticated users are redirected from `/dashboard` to `/sign-in`
 - Authenticated users are redirected away from `/`, `/sign-in`, `/sign-up`, and `/verify/*` to `/dashboard`
 - Credential login requires a verified account
+
+## Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a pull request
+
+## License
+
+No license file is currently defined in this repository.
 
 ## Notes
 
