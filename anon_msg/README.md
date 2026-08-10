@@ -1,96 +1,113 @@
-# AnonMsg
+# AnonMsg — Anonymous Messaging Platform
 
-Anonymous messaging platform built with Next.js, NextAuth, MongoDB, and AI-assisted message suggestions.
+AnonMsg is a full-stack Next.js application that lets users receive anonymous messages through a public profile link.
+It includes authentication, email verification, message management, and AI-powered prompt suggestions.
 
 ## Features
 
-- Anonymous message sending via public user links (`/u/[username]`)
-- Email/password + Google + GitHub authentication
-- OTP-based email verification
-- Dashboard to view and delete received messages
-- Toggle to accept/reject incoming messages
-- AI-powered anonymous message suggestions
-- Contact API integration
+- Username/email sign-up with OTP email verification
+- Credential login plus Google and GitHub OAuth (NextAuth)
+- Public profile pages (`/u/[username]`) for anonymous message submission
+- Dashboard for viewing and deleting received messages
+- Toggle to accept or pause incoming anonymous messages
+- AI-generated message suggestions (OpenRouter) with fallback prompts
+- Contact form endpoint and database health endpoint
+- Dark/light theme support
 
 ## Tech Stack
 
-- **Framework:** Next.js (App Router)
-- **Language:** TypeScript
-- **Auth:** NextAuth
+- **Framework:** Next.js (App Router), React, TypeScript
+- **Auth:** NextAuth (Credentials, Google, GitHub)
 - **Database:** MongoDB + Mongoose
 - **Validation:** Zod + React Hook Form
-- **Styling/UI:** Tailwind CSS + Radix UI + Shadcn UI
-- **Email:** Resend
-- **AI:** OpenRouter
+- **UI:** Tailwind CSS, Radix UI, custom components
+- **Email:** Resend (verification and contact flow)
+- **AI:** OpenRouter SDK
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── (app)/                  # Main pages (landing, dashboard, public profile, legal pages)
+│   ├── (auth)/                 # Sign-in, sign-up, verify routes
+│   ├── api/                    # API route handlers
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+│   ├── created/                # App-specific components
+│   └── ui/                     # Reusable UI primitives
+├── context/                    # Session/theme providers
+├── helpers/                    # Email helper logic
+├── lib/                        # DB and third-party client setup
+├── middlewares/                # Auth middleware logic
+├── model/                      # Mongoose models
+├── schemas/                    # Zod validation schemas
+└── types/                      # Shared TypeScript types
+```
+
+## API Overview
+
+- `POST /api/sign-up` — create or update unverified account, send OTP
+- `POST /api/user-otp-verification` — verify account using OTP
+- `POST /api/resend-otp` — resend verification code
+- `GET /api/unique-username-check` — username availability check
+- `POST /api/send-user-messages` — send anonymous message to a user
+- `GET /api/get-user-messages` — fetch authenticated user messages
+- `DELETE /api/delete-message` — delete a message from dashboard
+- `GET/POST /api/is-accepting-messages` — get or set message acceptance
+- `GET /api/check-acceptance` — check if a public user accepts messages
+- `GET /api/discover-channels` — list verified user channels
+- `POST /api/suggest-messages` — generate AI message suggestions
+- `POST /api/contact` — contact form submission endpoint
+- `GET /api/health/db` — database connectivity health check
+
+## Environment Variables
+
+Create a `.env.local` file in `anon_msg`:
+
+```env
+MONGODB_URI=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=http://localhost:3000
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+RESEND_API_KEY=
+RESEND_FROM=
+
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
+
+OPENROUTER_API_KEY=
+```
 
 ## Getting Started
-
-### 1) Clone and install
 
 ```bash
 git clone https://github.com/ritiksharmaaa/Anonmous_Message_NextJs.git
 cd Anonmous_Message_NextJs/anon_msg
 npm install
-```
-
-### 2) Configure environment variables
-
-Create a `.env.local` file in `/home/runner/work/Anonmous_Message_NextJs/Anonmous_Message_NextJs/anon_msg`:
-
-```env
-MONGODB_URI=your_mongodb_connection_string
-NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=http://localhost:3000
-
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-GITHUB_CLIENT_ID=your_github_client_id
-GITHUB_CLIENT_SECRET=your_github_client_secret
-
-RESEND_API_KEY=your_resend_api_key
-RESEND_FROM=your_verified_sender@yourdomain.com
-
-CONTACT_TO_EMAIL=your_inbox@yourdomain.com
-CONTACT_FROM_EMAIL=your_verified_sender@yourdomain.com
-
-OPENROUTER_API_KEY=your_openrouter_api_key
-```
-
-### 3) Run locally
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open http://localhost:3000 in your browser.
 
 ## Scripts
 
-```bash
-npm run dev    # start development server
-npm run build  # build for production
-npm run start  # start production server
-npm run lint   # run ESLint
-```
+- `npm run dev` — start development server
+- `npm run build` — create production build
+- `npm run start` — run production server
+- `npm run lint` — run ESLint
 
-## Project Structure
+## Authentication & Access Behavior
 
-```text
-anon_msg/
-├── src/
-│   ├── app/          # pages + API routes (App Router)
-│   ├── components/   # UI and custom components
-│   ├── context/      # auth/theme providers
-│   ├── helpers/      # utility helpers (e.g., email sending)
-│   ├── lib/          # DB and service clients
-│   ├── middlewares/  # custom middleware utilities
-│   ├── model/        # Mongoose models
-│   ├── schemas/      # Zod validation schemas
-│   └── types/        # shared TypeScript types
-├── public/
-└── package.json
-```
+- Unauthenticated users are redirected from `/dashboard` to `/sign-in`
+- Authenticated users are redirected away from `/`, `/sign-in`, `/sign-up`, and `/verify/*` to `/dashboard`
+- Credential login requires a verified account
 
 ## Contributing
 
@@ -104,3 +121,8 @@ Contributions are welcome.
 ## License
 
 No license file is currently defined in this repository.
+
+## Notes
+
+- AI suggestions gracefully fall back to static prompts if OpenRouter is unavailable.
+- Message data is embedded in each user document (`messages` array) in MongoDB.
